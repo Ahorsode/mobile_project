@@ -44,14 +44,21 @@ class AcademyScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTierHeader(String title, bool isUnlocked, double progress, double mastery) {
+  Widget _buildTierHeader(
+    String title,
+    bool isUnlocked,
+    double progress,
+    double mastery,
+  ) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: const Color(0xFF1E293B),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isUnlocked ? Colors.blueAccent.withOpacity(0.5) : Colors.grey.withOpacity(0.3),
+          color: isUnlocked
+              ? Colors.blueAccent.withOpacity(0.5)
+              : Colors.grey.withOpacity(0.3),
         ),
       ),
       child: Column(
@@ -83,7 +90,10 @@ class AcademyScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Progress", style: TextStyle(fontSize: 12, color: Colors.blueGrey)),
+                    const Text(
+                      "Progress",
+                      style: TextStyle(fontSize: 12, color: Colors.blueGrey),
+                    ),
                     const SizedBox(height: 4),
                     LinearProgressIndicator(
                       value: progress,
@@ -100,12 +110,17 @@ class AcademyScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Mastery", style: TextStyle(fontSize: 12, color: Colors.blueGrey)),
+                    const Text(
+                      "Mastery",
+                      style: TextStyle(fontSize: 12, color: Colors.blueGrey),
+                    ),
                     const SizedBox(height: 4),
                     LinearProgressIndicator(
                       value: mastery,
                       backgroundColor: Colors.black26,
-                      color: mastery >= 0.8 ? Colors.greenAccent : Colors.orangeAccent,
+                      color: mastery >= 0.8
+                          ? Colors.greenAccent
+                          : Colors.orangeAccent,
                       minHeight: 8,
                       borderRadius: BorderRadius.circular(4),
                     ),
@@ -119,7 +134,11 @@ class AcademyScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLessonGrid(BuildContext context, List lessons, AcademyProvider academy) {
+  Widget _buildLessonGrid(
+    BuildContext context,
+    List lessons,
+    AcademyProvider academy,
+  ) {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -139,9 +158,9 @@ class AcademyScreen extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialApp.router(
-                builder: (context, child) => LessonCardScreen(lesson: lesson),
-              ).routeInformationParser as RouteSettings, // Incorrect navigation pattern fix
+              MaterialPageRoute(
+                builder: (context) => LessonCardScreen(lesson: lesson),
+              ),
             );
           },
           child: Container(
@@ -157,7 +176,10 @@ class AcademyScreen extends StatelessWidget {
               children: [
                 Text(
                   lesson.title,
-                  style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -165,13 +187,24 @@ class AcademyScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     if (isCompleted)
-                      const Icon(Icons.check_circle, color: Colors.greenAccent, size: 20)
+                      const Icon(
+                        Icons.check_circle,
+                        color: Colors.greenAccent,
+                        size: 20,
+                      )
                     else
-                      const Icon(Icons.play_circle_outline, color: Colors.blueAccent, size: 20),
+                      const Icon(
+                        Icons.play_circle_outline,
+                        color: Colors.blueAccent,
+                        size: 20,
+                      ),
                     if (isCompleted)
                       Text(
                         "${(score * 100).toInt()}%",
-                        style: const TextStyle(fontSize: 12, color: Colors.blueGrey),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.blueGrey,
+                        ),
                       ),
                   ],
                 ),

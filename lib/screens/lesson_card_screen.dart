@@ -18,6 +18,19 @@ class _LessonCardScreenState extends State<LessonCardScreen> {
   int _currentPage = 0;
   int? _selectedOption;
   bool _isCorrect = false;
+  List<int> _shuffledIndices = [];
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.lesson.quiz.isNotEmpty) {
+      _shuffledIndices = List.generate(
+        widget.lesson.quiz[0].options.length,
+        (index) => index,
+      );
+      _shuffledIndices.shuffle();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +71,9 @@ class _LessonCardScreenState extends State<LessonCardScreen> {
               height: 4,
               margin: const EdgeInsets.symmetric(horizontal: 4),
               decoration: BoxDecoration(
-                color: _currentPage >= index ? Colors.blueAccent : Colors.white10,
+                color: _currentPage >= index
+                    ? Colors.blueAccent
+                    : Colors.white10,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -74,20 +89,42 @@ class _LessonCardScreenState extends State<LessonCardScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("CONCEPT", style: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
+          const Text(
+            "CONCEPT",
+            style: TextStyle(
+              color: Colors.blueAccent,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
+            ),
+          ),
           const SizedBox(height: 16),
           MarkdownBody(
             data: widget.lesson.theory,
             styleSheet: MarkdownStyleSheet(
-              p: const TextStyle(fontSize: 18, height: 1.5, color: Colors.white),
+              p: const TextStyle(
+                fontSize: 18,
+                height: 1.5,
+                color: Colors.white,
+              ),
             ),
           ),
           const SizedBox(height: 32),
-          const Text("THE LOGIC", style: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
+          const Text(
+            "THE LOGIC",
+            style: TextStyle(
+              color: Colors.blueAccent,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
+            ),
+          ),
           const SizedBox(height: 16),
           Text(
             widget.lesson.logic,
-            style: const TextStyle(fontSize: 16, color: Colors.blueGrey, fontStyle: FontStyle.italic),
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.blueGrey,
+              fontStyle: FontStyle.italic,
+            ),
           ),
         ],
       ),
@@ -100,7 +137,14 @@ class _LessonCardScreenState extends State<LessonCardScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("CODE DISCOVERY", style: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
+          const Text(
+            "CODE DISCOVERY",
+            style: TextStyle(
+              color: Colors.blueAccent,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
+            ),
+          ),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(16),
@@ -111,11 +155,22 @@ class _LessonCardScreenState extends State<LessonCardScreen> {
             ),
             child: Text(
               widget.lesson.codeDiscovery,
-              style: const TextStyle(fontFamily: 'Courier', fontSize: 16, color: Colors.greenAccent),
+              style: const TextStyle(
+                fontFamily: 'Courier',
+                fontSize: 16,
+                color: Colors.greenAccent,
+              ),
             ),
           ),
           const SizedBox(height: 32),
-          const Text("THE QUEST", style: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
+          const Text(
+            "THE QUEST",
+            style: TextStyle(
+              color: Colors.blueAccent,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
+            ),
+          ),
           const SizedBox(height: 16),
           Text(
             widget.lesson.quest,
@@ -130,39 +185,58 @@ class _LessonCardScreenState extends State<LessonCardScreen> {
     if (widget.lesson.quiz.isEmpty) {
       return const Center(child: Text("No quiz available for this lesson."));
     }
-    
-    final quiz = widget.lesson.quiz[0]; // Simplified to handle one question per lesson for UI demo
+
+    final quiz = widget
+        .lesson
+        .quiz[0]; // Simplified to handle one question per lesson for UI demo
 
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("CHECKPOINT", style: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
+          const Text(
+            "CHECKPOINT",
+            style: TextStyle(
+              color: Colors.blueAccent,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
+            ),
+          ),
           const SizedBox(height: 16),
-          Text(quiz.question, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+          Text(
+            quiz.question,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          ),
           const SizedBox(height: 24),
-          ...List.generate(quiz.options.length, (index) {
+          ...List.generate(_shuffledIndices.length, (index) {
+            final originalIndex = _shuffledIndices[index];
             bool isSelected = _selectedOption == index;
+            bool isCorrectOption = originalIndex == quiz.correctIndex;
+
             return Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: InkWell(
                 onTap: () {
                   setState(() {
                     _selectedOption = index;
-                    _isCorrect = index == quiz.correctIndex;
+                    _isCorrect = isCorrectOption;
                   });
                 },
                 child: Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: isSelected 
-                        ? (index == quiz.correctIndex ? Colors.green.withOpacity(0.2) : Colors.red.withOpacity(0.2)) 
+                    color: isSelected
+                        ? (isCorrectOption
+                              ? Colors.green.withOpacity(0.2)
+                              : Colors.red.withOpacity(0.2))
                         : Colors.white10,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: isSelected 
-                          ? (index == quiz.correctIndex ? Colors.greenAccent : Colors.redAccent) 
+                      color: isSelected
+                          ? (isCorrectOption
+                                ? Colors.greenAccent
+                                : Colors.redAccent)
                           : Colors.white10,
                     ),
                   ),
@@ -171,7 +245,7 @@ class _LessonCardScreenState extends State<LessonCardScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          "${String.fromCharCode(65 + index)}) ${quiz.options[index]}",
+                          "${String.fromCharCode(65 + index)}) ${quiz.options[originalIndex]}",
                           style: TextStyle(
                             fontSize: 16,
                             color: isSelected ? Colors.white : Colors.white70,
@@ -180,8 +254,10 @@ class _LessonCardScreenState extends State<LessonCardScreen> {
                       ),
                       if (isSelected)
                         Icon(
-                          index == quiz.correctIndex ? Icons.check_circle : Icons.cancel,
-                          color: index == quiz.correctIndex ? Colors.greenAccent : Colors.redAccent,
+                          isCorrectOption ? Icons.check_circle : Icons.cancel,
+                          color: isCorrectOption
+                              ? Colors.greenAccent
+                              : Colors.redAccent,
                         ),
                     ],
                   ),
@@ -202,7 +278,10 @@ class _LessonCardScreenState extends State<LessonCardScreen> {
         children: [
           if (_currentPage > 0)
             TextButton(
-              onPressed: () => _pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut),
+              onPressed: () => _pageController.previousPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              ),
               child: const Text("PREVIOUS"),
             )
           else
@@ -210,13 +289,18 @@ class _LessonCardScreenState extends State<LessonCardScreen> {
           ElevatedButton(
             onPressed: () {
               if (_currentPage < 2) {
-                _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                _pageController.nextPage(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
               } else {
                 if (_selectedOption != null) {
                   _completeLesson();
                 } else {
-                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Please select an answer first!")),
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Please select an answer first!"),
+                    ),
                   );
                 }
               }
@@ -225,7 +309,9 @@ class _LessonCardScreenState extends State<LessonCardScreen> {
               backgroundColor: Colors.blueAccent,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
             child: Text(_currentPage < 2 ? "NEXT" : "FINISH"),
           ),
@@ -239,10 +325,15 @@ class _LessonCardScreenState extends State<LessonCardScreen> {
     final score = _isCorrect ? 1.0 : 0.0; // Simplified score
     academy.completeLesson(widget.lesson.id, score);
     Navigator.pop(context);
-    
-    String message = _isCorrect ? "Perfect! Lesson Mastered." : "Completed! Review the concepts and try again.";
+
+    String message = _isCorrect
+        ? "Perfect! Lesson Mastered."
+        : "Completed! Review the concepts and try again.";
     ScaffoldMessenger.of(context).showSnackBar(
-       SnackBar(content: Text(message), backgroundColor: _isCorrect ? Colors.green : Colors.orange),
+      SnackBar(
+        content: Text(message),
+        backgroundColor: _isCorrect ? Colors.green : Colors.orange,
+      ),
     );
   }
 }

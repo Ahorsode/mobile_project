@@ -5,7 +5,7 @@
       {
         "id": "1.1",
         "title": "The Digital Brain",
-        "theory": "A computer\u2019s CPU is often called its \"brain,\" but it only understands the simplest instructions. All data\u2014whether a photo or a line of code\u2014is stored as binary, a series of 0s and 1s representing \"off\" and \"on\" electrical states.",
+        "theory": "A computer’s CPU is often called its \"brain,\" but it only understands the simplest instructions. All data—whether a photo or a line of code—is stored as binary, a series of 0s and 1s representing \"off\" and \"on\" electrical states.",
         "logic": "To run a program, the CPU follows the Fetch-Decode-Execute cycle: it fetches an instruction from memory, decodes it into a command it understands, and then executes that command. This process repeats millions of times per second to make your apps work.",
         "codeDiscovery": "# Converting the letter 'A' to its binary (digital) form\nchar = 'A'\nprint(bin(ord(char)))\n",
         "quest": "Use the print() function to display your own name.",
@@ -16,7 +16,7 @@
               "Read-Write-Save",
               "Fetch-Decode-Execute"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "question": "What is the smallest piece of memory called?",
@@ -24,7 +24,7 @@
               "A Byte",
               "A Bit"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           }
         ]
       },
@@ -41,7 +41,8 @@
             "options": [
               "Semicolons",
               "Indentation"
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "Which function is used to display output on the screen?",
@@ -67,7 +68,7 @@
               "int",
               "float"
             ],
-            "correctIndex": 2
+            "correctIndex": 1
           },
           {
             "question": "Is \"123\" considered an integer or a string in Python?",
@@ -75,7 +76,7 @@
               "Integer",
               "String"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           }
         ]
       },
@@ -119,7 +120,7 @@
               "3.33",
               "3"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "question": "Which operator is used to find the remainder of a division?",
@@ -153,7 +154,7 @@
               "An expression that is either True or False",
               "A type of mathematical calculation"
             ],
-            "correctIndex": 1
+            "correctIndex": 0
           }
         ]
       },
@@ -179,14 +180,14 @@
               "Only one",
               "All that are true"
             ],
-            "correctIndex": 1
+            "correctIndex": 0
           }
         ]
       },
       {
         "id": "3.3",
         "title": "Boolean Warriors",
-        "theory": "Sometimes one condition isn't enough. We use Logical Operators\u2014and, or, and not\u2014to combine multiple Boolean expressions.",
+        "theory": "Sometimes one condition isn't enough. We use Logical Operators—and, or, and not—to combine multiple Boolean expressions.",
         "logic": "With and, both sides must be True. With or, at least one side must be True. The not operator simply flips True to False and vice versa.",
         "codeDiscovery": "has_key = True\nis_level_10 = True\nif has_key and is_level_10:\nprint(\"Door opened!\")\n",
         "quest": "Write a condition that prints \"Access Granted\" if a user is an admin OR has a valid_token.",
@@ -197,7 +198,7 @@
               "True",
               "False"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "question": "Which operator reverses the truth value of an expression?",
@@ -205,7 +206,7 @@
               "reverse",
               "not"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           }
         ]
       },
@@ -223,14 +224,15 @@
               "Count-controlled",
               "Condition-controlled"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "question": "What statement can you use to immediately exit a loop?",
             "options": [
               "stop",
               "break"
-            ]
+            ],
+            "correctIndex": 1
           }
         ]
       },
@@ -247,14 +249,16 @@
             "options": [
               "1, 2, 3, 4",
               "1, 2, 3"
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "Which variable in a 'for' loop receives the current value from the list or range?",
             "options": [
               "Target variable",
               "Control variable"
-            ]
+            ],
+            "correctIndex": 1
           }
         ]
       }
@@ -276,14 +280,16 @@
             "options": [
               "They make the program run faster.",
               "They allow for code reuse and modularity."
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "What is the first line of a function definition called?",
             "options": [
               "Function body",
               "Function header."
-            ]
+            ],
+            "correctIndex": 1
           }
         ]
       },
@@ -300,14 +306,16 @@
             "options": [
               "send",
               "return."
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "A variable in a function header that receives an argument is a:",
             "options": [
               "Parameter.",
               "Global variable."
-            ]
+            ],
+            "correctIndex": 0
           }
         ]
       },
@@ -324,14 +332,16 @@
             "options": [
               "Anywhere in the program.",
               "Only within the function where it is defined."
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "Why should you generally avoid using global variables?",
             "options": [
               "They use too much memory.",
               "They make debugging difficult and allow unintended changes."
-            ]
+            ],
+            "correctIndex": 1
           }
         ]
       },
@@ -348,14 +358,16 @@
             "options": [
               "The first and second items.",
               "The first three items."
-            ]
+            ],
+            "correctIndex": 0
           },
           {
             "question": "Is the 'end' index of a slice included in the result?",
             "options": [
               "Yes",
               "No."
-            ]
+            ],
+            "correctIndex": 1
           }
         ]
       },
@@ -372,14 +384,16 @@
             "options": [
               "insert()",
               "append()."
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "What happens if you use .remove(item) and the item isn't in the list?",
             "options": [
               "The list stays the same.",
               "A ValueError exception is raised."
-            ]
+            ],
+            "correctIndex": 1
           }
         ]
       },
@@ -396,7 +410,8 @@
             "options": [
               "It can only hold strings.",
               "It is immutable (cannot be changed)."
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "Which brackets are used to define a tuple?",
@@ -404,7 +419,7 @@
               "[ ]",
               "( )."
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           }
         ]
       },
@@ -421,14 +436,16 @@
             "options": [
               "clean()",
               "strip()."
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "Can you change an individual character in a string using its index (e.g., s[0] = 'A')?",
             "options": [
               "Yes",
               "No (Strings are immutable)."
-            ]
+            ],
+            "correctIndex": 1
           }
         ]
       },
@@ -445,14 +462,16 @@
             "options": [
               "An index number.",
               "A key."
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "How do you add a new key-value pair to an existing dictionary?",
             "options": [
               "Use the .append() method.",
               "Assign a value to a new key (e.g., d[key] = value)."
-            ]
+            ],
+            "correctIndex": 1
           }
         ]
       },
@@ -469,14 +488,16 @@
             "options": [
               "It replaces the old item.",
               "The set remains unchanged (no duplicates allowed)."
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "Which operation combines all elements from two sets?",
             "options": [
               "Intersection",
               "Union."
-            ]
+            ],
+            "correctIndex": 1
           }
         ]
       },
@@ -493,260 +514,16 @@
             "options": [
               "Yes.",
               "No."
-            ]
-          },
-          {
-            "question": "In a list of lists [[1,2], [3,4]], how would you access the number 3?",
-            "options": [
-              "data[1][0]",
-              "data[0][1]"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "title": "Tier 2: Intermediate (Data Mastery)",
-    "lessons": [
-      {
-        "id": "5.1",
-        "title": "The Modular Architect",
-        "theory": "As programs grow, they become harder to manage. Professional developers use functions to break complex code into smaller, manageable \"modules\". A function is a named block of code that performs a specific task and can be executed whenever needed.",
-        "logic": "Functions allow for code reuse; instead of writing the same logic ten times, you write it once in a function and \"call\" it ten times. This also makes debugging easier because you only have one place to fix a mistake.",
-        "codeDiscovery": "def welcome_message():\nprint(\"Welcome to the Modular Quest!\")\nprint(\"Prepare for your next challenge.\")\nwelcome_message() # This calls the function\n",
-        "quest": "Define a function named shout_ready that prints \"I am ready for Tier 2!\" and call it.",
-        "quiz": [
-          {
-            "question": "What is the main benefit of using functions?",
-            "options": [
-              "They make the program run faster.",
-              "They allow for code reuse and modularity."
-            ]
-          },
-          {
-            "question": "What is the first line of a function definition called?",
-            "options": [
-              "Function body",
-              "Function header."
-            ]
-          }
-        ]
-      },
-      {
-        "id": "5.2",
-        "title": "The Messenger",
-        "theory": "Functions can be made more powerful by sending data into them. An argument is a piece of data sent into a function, and a parameter is the special variable that receives it.",
-        "logic": "Some functions are value-returning, meaning they perform a calculation and \"return\" the result back to the part of the program that called them.",
-        "codeDiscovery": "def double_number(num): # 'num' is a parameter\nreturn num * 2\nresult = double_number(10) # 10 is an argument\nprint(result) # Output: 20\n",
-        "quest": "Write a function square(n) that returns the square of a number, then print the result of square(5).",
-        "quiz": [
-          {
-            "question": "Which keyword is used to send a value back from a function?",
-            "options": [
-              "send",
-              "return."
-            ]
-          },
-          {
-            "question": "A variable in a function header that receives an argument is a:",
-            "options": [
-              "Parameter.",
-              "Global variable."
-            ]
-          }
-        ]
-      },
-      {
-        "id": "5.3",
-        "title": "The Scope Shield",
-        "theory": "Not all variables are visible everywhere. A local variable is created inside a function and cannot be accessed by code outside that function. Its \"scope\" is limited to its own function \"shield.\"",
-        "logic": "Global variables are visible to every function in a file. However, relying on them is risky because any part of the program can change them, leading to bugs that are hard to track.",
-        "codeDiscovery": "def my_func():\nlocal_var = \"I'm hidden!\"\nprint(local_var)\nmy_func()\n# print(local_var)  <-- This would cause an Error!\n",
-        "quest": "Create a global variable name and a function that prints it. Then try to create a local variable inside the function and print it.",
-        "quiz": [
-          {
-            "question": "Where can a local variable be accessed?",
-            "options": [
-              "Anywhere in the program.",
-              "Only within the function where it is defined."
-            ]
-          },
-          {
-            "question": "Why should you generally avoid using global variables?",
-            "options": [
-              "They use too much memory.",
-              "They make debugging difficult and allow unintended changes."
-            ]
-          }
-        ]
-      },
-      {
-        "id": "7.1",
-        "title": "The Slicer",
-        "theory": "A list is an object that contains multiple data items. Slicing allows you to select a specific range of these items to create a new, smaller list.",
-        "logic": "The slice format is list[start : end]. It includes the item at the start index but goes up to, but not including, the end index.",
-        "codeDiscovery": "items = [\"Shield\", \"Sword\", \"Potion\", \"Map\"]\ninventory = items[1:3]\nprint(inventory) # Output: ['Sword', 'Potion']\n",
-        "quest": "Create a list of 5 numbers and use a slice to print only the 2nd, 3rd, and 4th numbers.",
-        "quiz": [
-          {
-            "question": "What does my_list[0:2] return?",
-            "options": [
-              "The first and second items.",
-              "The first three items."
-            ]
-          },
-          {
-            "question": "Is the 'end' index of a slice included in the result?",
-            "options": [
-              "Yes",
-              "No."
-            ]
-          }
-        ]
-      },
-      {
-        "id": "7.2",
-        "title": "List Methods",
-        "theory": "Python provides built-in methods to manipulate lists dynamically. You can add items with .append(), insert them at a specific spot with .insert(), and remove them with .remove().",
-        "logic": "Methods like .sort() reorganize the list items (e.g., from lowest to highest), allowing you to manage data without manual loops.",
-        "codeDiscovery": "levels = [5, 2, 9, 1]\nlevels.append(10)  # Add to end\nlevels.sort()      # Sort: [1, 2, 5, 9, 10]\nlevels.remove(2)   # Remove the number 2\nprint(levels)\n",
-        "quest": "Create an empty list players, append three names to it, sort it alphabetically, and print the result.",
-        "quiz": [
-          {
-            "question": "Which method adds an item to the very end of a list?",
-            "options": [
-              "insert()",
-              "append()."
-            ]
-          },
-          {
-            "question": "What happens if you use .remove(item) and the item isn't in the list?",
-            "options": [
-              "The list stays the same.",
-              "A ValueError exception is raised."
-            ]
-          }
-        ]
-      },
-      {
-        "id": "7.3",
-        "title": "The Sequence Duo",
-        "theory": "Tuples are sequences just like lists, but with one major difference: they are immutable. This means once a tuple is created, its contents cannot be changed.",
-        "logic": "Use tuples for data that should stay \"safe\" and constant, like the coordinates of a map or the RGB values of a color. They are faster to process and prevent accidental data modification.",
-        "codeDiscovery": "point = (10, 20) # Defined with parentheses\n# point[0] = 15  <-- This would cause an Error!\nprint(point[1])\n",
-        "quest": "Create a tuple named origin with the values (0, 0, 0) and try to print the first value.",
-        "quiz": [
-          {
-            "question": "What makes a tuple different from a list?",
-            "options": [
-              "It can only hold strings.",
-              "It is immutable (cannot be changed)."
-            ]
-          },
-          {
-            "question": "Which brackets are used to define a tuple?",
-            "options": [
-              "[ ]",
-              "( )."
             ],
             "correctIndex": 0
-          }
-        ]
-      },
-      {
-        "id": "8.1",
-        "title": "String Secrets",
-        "theory": "Strings are also sequences, which means you can use indexes and slicing on them just like lists. Python provides string methods to test and clean text data.",
-        "logic": "Methods like .upper(), .lower(), and .strip() are essential for validating user input (e.g., making sure \"YES\" and \"yes\" are treated the same).",
-        "codeDiscovery": "msg = \"  Hello Quest!  \"\nclean_msg = msg.strip().lower() # Removes spaces and makes lowercase\nprint(clean_msg) # Output: \"hello quest!\"\n",
-        "quest": "Use the .find() method to find the position of the word \"Python\" in the string \"I love Python programming\".",
-        "quiz": [
-          {
-            "question": "Which method removes whitespace from both ends of a string?",
-            "options": [
-              "clean()",
-              "strip()."
-            ]
-          },
-          {
-            "question": "Can you change an individual character in a string using its index (e.g., s[0] = 'A')?",
-            "options": [
-              "Yes",
-              "No (Strings are immutable)."
-            ]
-          }
-        ]
-      },
-      {
-        "id": "9.1",
-        "title": "The Key-Value Map",
-        "theory": "A dictionary is an object that stores data in key-value pairs. Instead of using a numeric index, you use a unique \"key\" (like a label) to find its \"value\".",
-        "logic": "Dictionaries are highly efficient for looking up data. You can retrieve a value using its key inside brackets [] or by using the .get() method, which prevents errors if the key is missing.",
-        "codeDiscovery": "stats = {\"HP\": 100, \"Mana\": 50}\nstats[\"Mana\"] = 60 # Update value\nstats[\"Gold\"] = 10 # Add new pair\nprint(stats.get(\"Exp\", 0)) # Output: 0 (default if not found)\n",
-        "quest": "Create a dictionary called phone_book with two names and numbers. Add a third one and print the whole dictionary.",
-        "quiz": [
-          {
-            "question": "What is used to retrieve a value from a dictionary?",
-            "options": [
-              "An index number.",
-              "A key."
-            ]
-          },
-          {
-            "question": "How do you add a new key-value pair to an existing dictionary?",
-            "options": [
-              "Use the .append() method.",
-              "Assign a value to a new key (e.g., d[key] = value)."
-            ]
-          }
-        ]
-      },
-      {
-        "id": "9.2",
-        "title": "Set Theory",
-        "theory": "A set is a collection of unique elements. If you try to add a duplicate item to a set, Python will simply ignore it.",
-        "logic": "Sets are perfect for mathematical operations like Union (combining two sets) or Intersection (finding only the items that appear in both sets).",
-        "codeDiscovery": "set1 = {1, 2, 3}\nset2 = {3, 4, 5}\nprint(set1.union(set2))        # {1, 2, 3, 4, 5}\nprint(set1.intersection(set2)) # {3}\n",
-        "quest": "Create two sets of colors and find the intersection to see which colors are in both.",
-        "quiz": [
-          {
-            "question": "What happens if you add a duplicate item to a set?",
-            "options": [
-              "It replaces the old item.",
-              "The set remains unchanged (no duplicates allowed)."
-            ]
-          },
-          {
-            "question": "Which operation combines all elements from two sets?",
-            "options": [
-              "Intersection",
-              "Union."
-            ]
-          }
-        ]
-      },
-      {
-        "id": "9.3",
-        "title": "Nesting Dolls",
-        "theory": "Data structures can be nested inside each other. You can have a list of dictionaries, a dictionary of lists, or even a list of lists.",
-        "logic": "This is how complex data, like a game world with multiple characters and their specific inventories, is organized in professional software.",
-        "codeDiscovery": "players = [\n{\"name\": \"Hero\", \"items\": [\"Sword\", \"Shield\"]},\n{\"name\": \"Mage\", \"items\": [\"Staff\", \"Potion\"]}\n]\nprint(players[1][\"name\"]) # Output: Mage\n",
-        "quest": "Create a dictionary where the keys are category names (like \"Fruits\") and the values are lists of items (like [\"Apple\", \"Banana\"]).",
-        "quiz": [
-          {
-            "question": "Can a dictionary contain another dictionary as a value?",
-            "options": [
-              "Yes.",
-              "No."
-            ]
           },
           {
             "question": "In a list of lists [[1,2], [3,4]], how would you access the number 3?",
             "options": [
               "data[1][0]",
               "data[0][1]"
-            ]
+            ],
+            "correctIndex": 0
           }
         ]
       }
@@ -758,7 +535,7 @@
       {
         "id": "10.1",
         "title": "Blueprinting (OOP)",
-        "theory": "Object-Oriented Programming (OOP) is a method of aligning software design around data, or \"objects,\" rather than functions and logic. A Class serves as a blueprint\u2014for example, a \"Car\" class defines what every car has (wheels, color) and does (drive, brake).",
+        "theory": "Object-Oriented Programming (OOP) is a method of aligning software design around data, or \"objects,\" rather than functions and logic. A Class serves as a blueprint—for example, a \"Car\" class defines what every car has (wheels, color) and does (drive, brake).",
         "logic": "The self parameter is a reference to the current instance of the class and is used to access variables that belong to the class.",
         "codeDiscovery": "class Hero:\ndef set_name(self, name):\nself.name = name\nmy_hero = Hero()\nmy_hero.set_name(\"Astra\")\n",
         "quest": "Create a class named Pet and define a method set_type that assigns a species to the pet using self.",
@@ -768,14 +545,16 @@
             "options": [
               "A Function",
               "A Class"
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "What parameter is required in every class method to refer to the specific object?",
             "options": [
               "self",
               "instance"
-            ]
+            ],
+            "correctIndex": 0
           }
         ]
       },
@@ -792,14 +571,16 @@
             "options": [
               "start",
               "init"
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "Where are an object's attributes usually initialized?",
             "options": [
               "In the constructor",
               "In a global variable"
-            ]
+            ],
+            "correctIndex": 0
           }
         ]
       },
@@ -816,14 +597,16 @@
             "options": [
               "Use the 'private' keyword",
               "Start the name with two underscores"
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "What is the main purpose of encapsulation?",
             "options": [
               "To make code run faster",
               "To protect an object's internal data from outside interference"
-            ]
+            ],
+            "correctIndex": 1
           }
         ]
       },
@@ -840,14 +623,16 @@
             "options": [
               "Subclass",
               "Superclass"
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "What kind of relationship does inheritance establish?",
             "options": [
               "\"is-a\" relationship",
               "\"has-a\" relationship"
-            ]
+            ],
+            "correctIndex": 0
           }
         ]
       },
@@ -864,14 +649,16 @@
             "options": [
               "'w'",
               "'r'"
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "What must you do to ensure data is properly saved to a file?",
             "options": [
               "Use the save() method",
               "Use the close() method"
-            ]
+            ],
+            "correctIndex": 1
           }
         ]
       },
@@ -888,14 +675,16 @@
             "options": [
               "except",
               "try"
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "What is the purpose of an 'except' block?",
             "options": [
               "To repeat code",
               "To handle an error if one occurs in the try block"
-            ]
+            ],
+            "correctIndex": 1
           }
         ]
       },
@@ -912,14 +701,16 @@
             "options": [
               "MAKE TABLE",
               "CREATE TABLE"
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "What object is used to execute SQL statements in Python?",
             "options": [
               "Connector",
               "Cursor"
-            ]
+            ],
+            "correctIndex": 1
           }
         ]
       },
@@ -936,21 +727,23 @@
             "options": [
               "FILTER",
               "WHERE"
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "Which method retrieves all rows from a query result?",
             "options": [
               "fetchall()",
               "getall()"
-            ]
+            ],
+            "correctIndex": 0
           }
         ]
       },
       {
         "id": "14.3",
         "title": "The Full Cycle (CRUD)",
-        "theory": "CRUD stands for Create, Read, Update, and Delete\u2014the four basic operations of persistent storage.",
+        "theory": "CRUD stands for Create, Read, Update, and Delete—the four basic operations of persistent storage.",
         "logic": "You use INSERT to create data, UPDATE to change existing data, and DELETE to remove it. Crucial: You must call conn.commit() to save these changes permanently to the database file.",
         "codeDiscovery": "cur.execute('UPDATE Inventory SET Qty = 20 WHERE Item = \"Potion\"')\nconn.commit() # This saves the change!\n",
         "quest": "Write an UPDATE statement to change a player's Score to 100 in a Scores table.",
@@ -960,14 +753,16 @@
             "options": [
               "save()",
               "commit()"
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "Which SQL command is used to remove a record?",
             "options": [
               "REMOVE",
               "DELETE"
-            ]
+            ],
+            "correctIndex": 1
           }
         ]
       },
@@ -984,14 +779,16 @@
             "options": [
               "Redundant function",
               "Recursive function"
-            ]
+            ],
+            "correctIndex": 1
           },
           {
             "question": "What is the part of a recursive function that stops the recursion?",
             "options": [
               "Stop case",
               "Base case"
-            ]
+            ],
+            "correctIndex": 1
           }
         ]
       }
