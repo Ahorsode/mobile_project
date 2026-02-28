@@ -1,0 +1,1000 @@
+[
+  {
+    "title": "Tier 1: Beginner (Foundations)",
+    "lessons": [
+      {
+        "id": "1.1",
+        "title": "The Digital Brain",
+        "theory": "A computer\u2019s CPU is often called its \"brain,\" but it only understands the simplest instructions. All data\u2014whether a photo or a line of code\u2014is stored as binary, a series of 0s and 1s representing \"off\" and \"on\" electrical states.",
+        "logic": "To run a program, the CPU follows the Fetch-Decode-Execute cycle: it fetches an instruction from memory, decodes it into a command it understands, and then executes that command. This process repeats millions of times per second to make your apps work.",
+        "codeDiscovery": "# Converting the letter 'A' to its binary (digital) form\nchar = 'A'\nprint(bin(ord(char)))\n",
+        "quest": "Use the print() function to display your own name.",
+        "quiz": [
+          {
+            "question": "What cycle does the CPU use to process instructions?",
+            "options": [
+              "Read-Write-Save",
+              "Fetch-Decode-Execute"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "question": "What is the smallest piece of memory called?",
+            "options": [
+              "A Byte",
+              "A Bit"
+            ],
+            "correctIndex": 0
+          }
+        ]
+      },
+      {
+        "id": "1.2",
+        "title": "The Python Secret",
+        "theory": "Unlike many languages that use curly braces { } or semicolons ; to end a line, Python uses indentation (whitespace) to group code blocks. This makes Python code much cleaner and easier to read, appearing almost like English.",
+        "logic": "In Python, a single misplaced space can cause an \"Indentation Error.\" This forces developers to write well-organized code from the start.",
+        "codeDiscovery": "print(\"Python is easy!\")\n# Every line starts at the same level (no indentation yet)\n",
+        "quest": "Write a script that prints \"Level 1 Complete\" on one line and \"Welcome to PyQuest\" on the next.",
+        "quiz": [
+          {
+            "question": "What does Python use to define blocks of code?",
+            "options": [
+              "Semicolons",
+              "Indentation"
+            ]
+          },
+          {
+            "question": "Which function is used to display output on the screen?",
+            "options": [
+              "display()",
+              "print()"
+            ],
+            "correctIndex": 1
+          }
+        ]
+      },
+      {
+        "id": "2.1",
+        "title": "The Variable Vault",
+        "theory": "Variables are named boxes in computer memory used to store data. Each variable has a data type that tells Python what kind of data is inside: int (integers like 5), float (decimals like 5.5), and str (text strings).",
+        "logic": "To create a variable, you use an assignment statement (e.g., x = 10). You can always check a variable's type using the type() function.",
+        "codeDiscovery": "score = 100        # This is an int\nhealth = 75.5      # This is a float\nname = \"Hero\"      # This is a str\nprint(type(score))\n",
+        "quest": "Create a variable called car_name and assign it the value \"Tesla\".",
+        "quiz": [
+          {
+            "question": "Which data type would you use for the number 3.14?",
+            "options": [
+              "int",
+              "float"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "question": "Is \"123\" considered an integer or a string in Python?",
+            "options": [
+              "Integer",
+              "String"
+            ],
+            "correctIndex": 0
+          }
+        ]
+      },
+      {
+        "id": "2.2",
+        "title": "The Input Bridge",
+        "theory": "To make programs interactive, we use the input() function to get data from the user. However, input() always treats what the user types as a string (text), even if they type a number.",
+        "logic": "If you want to perform math with user input, you must use Type Casting (like int() or float()) to convert that text into a number.",
+        "codeDiscovery": "age_str = input(\"Enter your age: \")\nage = int(age_str)  # Casting string to integer\nprint(\"Next year you will be:\", age + 1)\n",
+        "quest": "Ask the user for their favorite number, convert it to an integer, and print it multiplied by 2.",
+        "quiz": [
+          {
+            "question": "What data type does the input() function always return?",
+            "options": [
+              "String",
+              "Integer"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "question": "Which function converts a value to a floating-point number?",
+            "options": [
+              "str()",
+              "float()"
+            ],
+            "correctIndex": 1
+          }
+        ]
+      },
+      {
+        "id": "2.3",
+        "title": "The Math Lab",
+        "theory": "Python can be used as a powerful calculator using math operators: + (add), - (subtract), * (multiply), / (divide), and % (remainder/modulo).",
+        "logic": "Python follows Operator Precedence (PEMDAS). It performs multiplication and division before addition and subtraction unless you use parentheses ( ) to change the order.",
+        "codeDiscovery": "result = (10 + 5) * 2  # Parentheses first: 15 * 2 = 30\nremainder = 10 % 3     # Modulo gives the remainder: 1\nprint(result, remainder)\n",
+        "quest": "Calculate the area of a rectangle with a width of 10 and a height of 5 using variables.",
+        "quiz": [
+          {
+            "question": "What is the result of 10 // 3 (integer division)?",
+            "options": [
+              "3.33",
+              "3"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "question": "Which operator is used to find the remainder of a division?",
+            "options": [
+              "/",
+              "%"
+            ],
+            "correctIndex": 1
+          }
+        ]
+      },
+      {
+        "id": "3.1",
+        "title": "The Logic Gate",
+        "theory": "Programs often need to make decisions. The if statement allows a block of code to run ONLY if a specific condition is True.",
+        "logic": "We use Comparison Operators to test these conditions: == (equal to), != (not equal), > (greater than), and < (less than).",
+        "codeDiscovery": "score = 90\nif score >= 70:\nprint(\"You passed the quest!\")\n",
+        "quest": "Write an if statement that prints \"Low Battery\" if a variable battery is less than 20.",
+        "quiz": [
+          {
+            "question": "Which operator checks if two values are exactly equal?",
+            "options": [
+              "=",
+              "=="
+            ],
+            "correctIndex": 1
+          },
+          {
+            "question": "What is a Boolean expression?",
+            "options": [
+              "An expression that is either True or False",
+              "A type of mathematical calculation"
+            ],
+            "correctIndex": 1
+          }
+        ]
+      },
+      {
+        "id": "3.2",
+        "title": "The Fork in the Road",
+        "theory": "What if you want to do one thing if a condition is True, and something else if it's False? We use the if-else statement. For multiple choices, we use if-elif-else.",
+        "logic": "This creates \"Dual-Alternative\" or \"Multi-Alternative\" decision structures, allowing your program to handle many different scenarios.",
+        "codeDiscovery": "temp = 30\nif temp > 80:\nprint(\"It's hot!\")\nelif temp > 60:\nprint(\"It's nice out.\")\nelse:\nprint(\"It's cold!\")\n",
+        "quest": "Write a script that checks a grade variable. If it's 90+, print \"A\"; 80+, print \"B\"; otherwise, print \"C\".",
+        "quiz": [
+          {
+            "question": "Which statement provides a default path if no 'if' or 'elif' conditions are met?",
+            "options": [
+              "stop",
+              "else"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "question": "In an if-elif-else structure, how many blocks of code can execute?",
+            "options": [
+              "Only one",
+              "All that are true"
+            ],
+            "correctIndex": 1
+          }
+        ]
+      },
+      {
+        "id": "3.3",
+        "title": "Boolean Warriors",
+        "theory": "Sometimes one condition isn't enough. We use Logical Operators\u2014and, or, and not\u2014to combine multiple Boolean expressions.",
+        "logic": "With and, both sides must be True. With or, at least one side must be True. The not operator simply flips True to False and vice versa.",
+        "codeDiscovery": "has_key = True\nis_level_10 = True\nif has_key and is_level_10:\nprint(\"Door opened!\")\n",
+        "quest": "Write a condition that prints \"Access Granted\" if a user is an admin OR has a valid_token.",
+        "quiz": [
+          {
+            "question": "If A is True and B is False, what is the result of (A and B)?",
+            "options": [
+              "True",
+              "False"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "question": "Which operator reverses the truth value of an expression?",
+            "options": [
+              "reverse",
+              "not"
+            ],
+            "correctIndex": 0
+          }
+        ]
+      },
+      {
+        "id": "4.1",
+        "title": "The Infinite Loop",
+        "theory": "A while loop repeats a block of code as long as a condition remains True. It is \"condition-controlled\" because the loop only stops when the condition becomes False.",
+        "logic": "Be careful! If the condition never becomes False, you create an Infinite Loop, which can crash your program.",
+        "codeDiscovery": "countdown = 5\nwhile countdown > 0:\nprint(countdown)\ncountdown -= 1  # Important: change the condition!\nprint(\"Blast off!\")\n",
+        "quest": "Write a while loop that prints \"Loading...\" 3 times.",
+        "quiz": [
+          {
+            "question": "What type of loop is the 'while' loop?",
+            "options": [
+              "Count-controlled",
+              "Condition-controlled"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "question": "What statement can you use to immediately exit a loop?",
+            "options": [
+              "stop",
+              "break"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "4.2",
+        "title": "The Counter Quest",
+        "theory": "A for loop is \"count-controlled,\" meaning it repeats a specific number of times. In Python, we usually use it with the range() function.",
+        "logic": "range(5) will generate numbers from 0 up to (but not including) 5. This is the most efficient way to repeat an action when you know exactly how many times it should run.",
+        "codeDiscovery": "for x in range(5):\nprint(\"Repeat number:\", x)\n",
+        "quest": "Use a for loop and range() to print the numbers from 1 to 10.",
+        "quiz": [
+          {
+            "question": "What numbers will range(1, 4) generate?",
+            "options": [
+              "1, 2, 3, 4",
+              "1, 2, 3"
+            ]
+          },
+          {
+            "question": "Which variable in a 'for' loop receives the current value from the list or range?",
+            "options": [
+              "Target variable",
+              "Control variable"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Tier 2: Intermediate (Data Mastery)",
+    "lessons": [
+      {
+        "id": "5.1",
+        "title": "The Modular Architect",
+        "theory": "As programs grow, they become harder to manage. Professional developers use functions to break complex code into smaller, manageable \"modules\". A function is a named block of code that performs a specific task and can be executed whenever needed.",
+        "logic": "Functions allow for code reuse; instead of writing the same logic ten times, you write it once in a function and \"call\" it ten times. This also makes debugging easier because you only have one place to fix a mistake.",
+        "codeDiscovery": "def welcome_message():\nprint(\"Welcome to the Modular Quest!\")\nprint(\"Prepare for your next challenge.\")\nwelcome_message() # This calls the function\n",
+        "quest": "Define a function named shout_ready that prints \"I am ready for Tier 2!\" and call it.",
+        "quiz": [
+          {
+            "question": "What is the main benefit of using functions?",
+            "options": [
+              "They make the program run faster.",
+              "They allow for code reuse and modularity."
+            ]
+          },
+          {
+            "question": "What is the first line of a function definition called?",
+            "options": [
+              "Function body",
+              "Function header."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "5.2",
+        "title": "The Messenger",
+        "theory": "Functions can be made more powerful by sending data into them. An argument is a piece of data sent into a function, and a parameter is the special variable that receives it.",
+        "logic": "Some functions are value-returning, meaning they perform a calculation and \"return\" the result back to the part of the program that called them.",
+        "codeDiscovery": "def double_number(num): # 'num' is a parameter\nreturn num * 2\nresult = double_number(10) # 10 is an argument\nprint(result) # Output: 20\n",
+        "quest": "Write a function square(n) that returns the square of a number, then print the result of square(5).",
+        "quiz": [
+          {
+            "question": "Which keyword is used to send a value back from a function?",
+            "options": [
+              "send",
+              "return."
+            ]
+          },
+          {
+            "question": "A variable in a function header that receives an argument is a:",
+            "options": [
+              "Parameter.",
+              "Global variable."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "5.3",
+        "title": "The Scope Shield",
+        "theory": "Not all variables are visible everywhere. A local variable is created inside a function and cannot be accessed by code outside that function. Its \"scope\" is limited to its own function \"shield.\"",
+        "logic": "Global variables are visible to every function in a file. However, relying on them is risky because any part of the program can change them, leading to bugs that are hard to track.",
+        "codeDiscovery": "def my_func():\nlocal_var = \"I'm hidden!\"\nprint(local_var)\nmy_func()\n# print(local_var)  <-- This would cause an Error!\n",
+        "quest": "Create a global variable name and a function that prints it. Then try to create a local variable inside the function and print it.",
+        "quiz": [
+          {
+            "question": "Where can a local variable be accessed?",
+            "options": [
+              "Anywhere in the program.",
+              "Only within the function where it is defined."
+            ]
+          },
+          {
+            "question": "Why should you generally avoid using global variables?",
+            "options": [
+              "They use too much memory.",
+              "They make debugging difficult and allow unintended changes."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "7.1",
+        "title": "The Slicer",
+        "theory": "A list is an object that contains multiple data items. Slicing allows you to select a specific range of these items to create a new, smaller list.",
+        "logic": "The slice format is list[start : end]. It includes the item at the start index but goes up to, but not including, the end index.",
+        "codeDiscovery": "items = [\"Shield\", \"Sword\", \"Potion\", \"Map\"]\ninventory = items[1:3]\nprint(inventory) # Output: ['Sword', 'Potion']\n",
+        "quest": "Create a list of 5 numbers and use a slice to print only the 2nd, 3rd, and 4th numbers.",
+        "quiz": [
+          {
+            "question": "What does my_list[0:2] return?",
+            "options": [
+              "The first and second items.",
+              "The first three items."
+            ]
+          },
+          {
+            "question": "Is the 'end' index of a slice included in the result?",
+            "options": [
+              "Yes",
+              "No."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "7.2",
+        "title": "List Methods",
+        "theory": "Python provides built-in methods to manipulate lists dynamically. You can add items with .append(), insert them at a specific spot with .insert(), and remove them with .remove().",
+        "logic": "Methods like .sort() reorganize the list items (e.g., from lowest to highest), allowing you to manage data without manual loops.",
+        "codeDiscovery": "levels = [5, 2, 9, 1]\nlevels.append(10)  # Add to end\nlevels.sort()      # Sort: [1, 2, 5, 9, 10]\nlevels.remove(2)   # Remove the number 2\nprint(levels)\n",
+        "quest": "Create an empty list players, append three names to it, sort it alphabetically, and print the result.",
+        "quiz": [
+          {
+            "question": "Which method adds an item to the very end of a list?",
+            "options": [
+              "insert()",
+              "append()."
+            ]
+          },
+          {
+            "question": "What happens if you use .remove(item) and the item isn't in the list?",
+            "options": [
+              "The list stays the same.",
+              "A ValueError exception is raised."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "7.3",
+        "title": "The Sequence Duo",
+        "theory": "Tuples are sequences just like lists, but with one major difference: they are immutable. This means once a tuple is created, its contents cannot be changed.",
+        "logic": "Use tuples for data that should stay \"safe\" and constant, like the coordinates of a map or the RGB values of a color. They are faster to process and prevent accidental data modification.",
+        "codeDiscovery": "point = (10, 20) # Defined with parentheses\n# point[0] = 15  <-- This would cause an Error!\nprint(point[1])\n",
+        "quest": "Create a tuple named origin with the values (0, 0, 0) and try to print the first value.",
+        "quiz": [
+          {
+            "question": "What makes a tuple different from a list?",
+            "options": [
+              "It can only hold strings.",
+              "It is immutable (cannot be changed)."
+            ]
+          },
+          {
+            "question": "Which brackets are used to define a tuple?",
+            "options": [
+              "[ ]",
+              "( )."
+            ],
+            "correctIndex": 0
+          }
+        ]
+      },
+      {
+        "id": "8.1",
+        "title": "String Secrets",
+        "theory": "Strings are also sequences, which means you can use indexes and slicing on them just like lists. Python provides string methods to test and clean text data.",
+        "logic": "Methods like .upper(), .lower(), and .strip() are essential for validating user input (e.g., making sure \"YES\" and \"yes\" are treated the same).",
+        "codeDiscovery": "msg = \"  Hello Quest!  \"\nclean_msg = msg.strip().lower() # Removes spaces and makes lowercase\nprint(clean_msg) # Output: \"hello quest!\"\n",
+        "quest": "Use the .find() method to find the position of the word \"Python\" in the string \"I love Python programming\".",
+        "quiz": [
+          {
+            "question": "Which method removes whitespace from both ends of a string?",
+            "options": [
+              "clean()",
+              "strip()."
+            ]
+          },
+          {
+            "question": "Can you change an individual character in a string using its index (e.g., s[0] = 'A')?",
+            "options": [
+              "Yes",
+              "No (Strings are immutable)."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "9.1",
+        "title": "The Key-Value Map",
+        "theory": "A dictionary is an object that stores data in key-value pairs. Instead of using a numeric index, you use a unique \"key\" (like a label) to find its \"value\".",
+        "logic": "Dictionaries are highly efficient for looking up data. You can retrieve a value using its key inside brackets [] or by using the .get() method, which prevents errors if the key is missing.",
+        "codeDiscovery": "stats = {\"HP\": 100, \"Mana\": 50}\nstats[\"Mana\"] = 60 # Update value\nstats[\"Gold\"] = 10 # Add new pair\nprint(stats.get(\"Exp\", 0)) # Output: 0 (default if not found)\n",
+        "quest": "Create a dictionary called phone_book with two names and numbers. Add a third one and print the whole dictionary.",
+        "quiz": [
+          {
+            "question": "What is used to retrieve a value from a dictionary?",
+            "options": [
+              "An index number.",
+              "A key."
+            ]
+          },
+          {
+            "question": "How do you add a new key-value pair to an existing dictionary?",
+            "options": [
+              "Use the .append() method.",
+              "Assign a value to a new key (e.g., d[key] = value)."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "9.2",
+        "title": "Set Theory",
+        "theory": "A set is a collection of unique elements. If you try to add a duplicate item to a set, Python will simply ignore it.",
+        "logic": "Sets are perfect for mathematical operations like Union (combining two sets) or Intersection (finding only the items that appear in both sets).",
+        "codeDiscovery": "set1 = {1, 2, 3}\nset2 = {3, 4, 5}\nprint(set1.union(set2))        # {1, 2, 3, 4, 5}\nprint(set1.intersection(set2)) # {3}\n",
+        "quest": "Create two sets of colors and find the intersection to see which colors are in both.",
+        "quiz": [
+          {
+            "question": "What happens if you add a duplicate item to a set?",
+            "options": [
+              "It replaces the old item.",
+              "The set remains unchanged (no duplicates allowed)."
+            ]
+          },
+          {
+            "question": "Which operation combines all elements from two sets?",
+            "options": [
+              "Intersection",
+              "Union."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "9.3",
+        "title": "Nesting Dolls",
+        "theory": "Data structures can be nested inside each other. You can have a list of dictionaries, a dictionary of lists, or even a list of lists.",
+        "logic": "This is how complex data, like a game world with multiple characters and their specific inventories, is organized in professional software.",
+        "codeDiscovery": "players = [\n{\"name\": \"Hero\", \"items\": [\"Sword\", \"Shield\"]},\n{\"name\": \"Mage\", \"items\": [\"Staff\", \"Potion\"]}\n]\nprint(players[1][\"name\"]) # Output: Mage\n",
+        "quest": "Create a dictionary where the keys are category names (like \"Fruits\") and the values are lists of items (like [\"Apple\", \"Banana\"]).",
+        "quiz": [
+          {
+            "question": "Can a dictionary contain another dictionary as a value?",
+            "options": [
+              "Yes.",
+              "No."
+            ]
+          },
+          {
+            "question": "In a list of lists [[1,2], [3,4]], how would you access the number 3?",
+            "options": [
+              "data[1][0]",
+              "data[0][1]"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Tier 2: Intermediate (Data Mastery)",
+    "lessons": [
+      {
+        "id": "5.1",
+        "title": "The Modular Architect",
+        "theory": "As programs grow, they become harder to manage. Professional developers use functions to break complex code into smaller, manageable \"modules\". A function is a named block of code that performs a specific task and can be executed whenever needed.",
+        "logic": "Functions allow for code reuse; instead of writing the same logic ten times, you write it once in a function and \"call\" it ten times. This also makes debugging easier because you only have one place to fix a mistake.",
+        "codeDiscovery": "def welcome_message():\nprint(\"Welcome to the Modular Quest!\")\nprint(\"Prepare for your next challenge.\")\nwelcome_message() # This calls the function\n",
+        "quest": "Define a function named shout_ready that prints \"I am ready for Tier 2!\" and call it.",
+        "quiz": [
+          {
+            "question": "What is the main benefit of using functions?",
+            "options": [
+              "They make the program run faster.",
+              "They allow for code reuse and modularity."
+            ]
+          },
+          {
+            "question": "What is the first line of a function definition called?",
+            "options": [
+              "Function body",
+              "Function header."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "5.2",
+        "title": "The Messenger",
+        "theory": "Functions can be made more powerful by sending data into them. An argument is a piece of data sent into a function, and a parameter is the special variable that receives it.",
+        "logic": "Some functions are value-returning, meaning they perform a calculation and \"return\" the result back to the part of the program that called them.",
+        "codeDiscovery": "def double_number(num): # 'num' is a parameter\nreturn num * 2\nresult = double_number(10) # 10 is an argument\nprint(result) # Output: 20\n",
+        "quest": "Write a function square(n) that returns the square of a number, then print the result of square(5).",
+        "quiz": [
+          {
+            "question": "Which keyword is used to send a value back from a function?",
+            "options": [
+              "send",
+              "return."
+            ]
+          },
+          {
+            "question": "A variable in a function header that receives an argument is a:",
+            "options": [
+              "Parameter.",
+              "Global variable."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "5.3",
+        "title": "The Scope Shield",
+        "theory": "Not all variables are visible everywhere. A local variable is created inside a function and cannot be accessed by code outside that function. Its \"scope\" is limited to its own function \"shield.\"",
+        "logic": "Global variables are visible to every function in a file. However, relying on them is risky because any part of the program can change them, leading to bugs that are hard to track.",
+        "codeDiscovery": "def my_func():\nlocal_var = \"I'm hidden!\"\nprint(local_var)\nmy_func()\n# print(local_var)  <-- This would cause an Error!\n",
+        "quest": "Create a global variable name and a function that prints it. Then try to create a local variable inside the function and print it.",
+        "quiz": [
+          {
+            "question": "Where can a local variable be accessed?",
+            "options": [
+              "Anywhere in the program.",
+              "Only within the function where it is defined."
+            ]
+          },
+          {
+            "question": "Why should you generally avoid using global variables?",
+            "options": [
+              "They use too much memory.",
+              "They make debugging difficult and allow unintended changes."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "7.1",
+        "title": "The Slicer",
+        "theory": "A list is an object that contains multiple data items. Slicing allows you to select a specific range of these items to create a new, smaller list.",
+        "logic": "The slice format is list[start : end]. It includes the item at the start index but goes up to, but not including, the end index.",
+        "codeDiscovery": "items = [\"Shield\", \"Sword\", \"Potion\", \"Map\"]\ninventory = items[1:3]\nprint(inventory) # Output: ['Sword', 'Potion']\n",
+        "quest": "Create a list of 5 numbers and use a slice to print only the 2nd, 3rd, and 4th numbers.",
+        "quiz": [
+          {
+            "question": "What does my_list[0:2] return?",
+            "options": [
+              "The first and second items.",
+              "The first three items."
+            ]
+          },
+          {
+            "question": "Is the 'end' index of a slice included in the result?",
+            "options": [
+              "Yes",
+              "No."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "7.2",
+        "title": "List Methods",
+        "theory": "Python provides built-in methods to manipulate lists dynamically. You can add items with .append(), insert them at a specific spot with .insert(), and remove them with .remove().",
+        "logic": "Methods like .sort() reorganize the list items (e.g., from lowest to highest), allowing you to manage data without manual loops.",
+        "codeDiscovery": "levels = [5, 2, 9, 1]\nlevels.append(10)  # Add to end\nlevels.sort()      # Sort: [1, 2, 5, 9, 10]\nlevels.remove(2)   # Remove the number 2\nprint(levels)\n",
+        "quest": "Create an empty list players, append three names to it, sort it alphabetically, and print the result.",
+        "quiz": [
+          {
+            "question": "Which method adds an item to the very end of a list?",
+            "options": [
+              "insert()",
+              "append()."
+            ]
+          },
+          {
+            "question": "What happens if you use .remove(item) and the item isn't in the list?",
+            "options": [
+              "The list stays the same.",
+              "A ValueError exception is raised."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "7.3",
+        "title": "The Sequence Duo",
+        "theory": "Tuples are sequences just like lists, but with one major difference: they are immutable. This means once a tuple is created, its contents cannot be changed.",
+        "logic": "Use tuples for data that should stay \"safe\" and constant, like the coordinates of a map or the RGB values of a color. They are faster to process and prevent accidental data modification.",
+        "codeDiscovery": "point = (10, 20) # Defined with parentheses\n# point[0] = 15  <-- This would cause an Error!\nprint(point[1])\n",
+        "quest": "Create a tuple named origin with the values (0, 0, 0) and try to print the first value.",
+        "quiz": [
+          {
+            "question": "What makes a tuple different from a list?",
+            "options": [
+              "It can only hold strings.",
+              "It is immutable (cannot be changed)."
+            ]
+          },
+          {
+            "question": "Which brackets are used to define a tuple?",
+            "options": [
+              "[ ]",
+              "( )."
+            ],
+            "correctIndex": 0
+          }
+        ]
+      },
+      {
+        "id": "8.1",
+        "title": "String Secrets",
+        "theory": "Strings are also sequences, which means you can use indexes and slicing on them just like lists. Python provides string methods to test and clean text data.",
+        "logic": "Methods like .upper(), .lower(), and .strip() are essential for validating user input (e.g., making sure \"YES\" and \"yes\" are treated the same).",
+        "codeDiscovery": "msg = \"  Hello Quest!  \"\nclean_msg = msg.strip().lower() # Removes spaces and makes lowercase\nprint(clean_msg) # Output: \"hello quest!\"\n",
+        "quest": "Use the .find() method to find the position of the word \"Python\" in the string \"I love Python programming\".",
+        "quiz": [
+          {
+            "question": "Which method removes whitespace from both ends of a string?",
+            "options": [
+              "clean()",
+              "strip()."
+            ]
+          },
+          {
+            "question": "Can you change an individual character in a string using its index (e.g., s[0] = 'A')?",
+            "options": [
+              "Yes",
+              "No (Strings are immutable)."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "9.1",
+        "title": "The Key-Value Map",
+        "theory": "A dictionary is an object that stores data in key-value pairs. Instead of using a numeric index, you use a unique \"key\" (like a label) to find its \"value\".",
+        "logic": "Dictionaries are highly efficient for looking up data. You can retrieve a value using its key inside brackets [] or by using the .get() method, which prevents errors if the key is missing.",
+        "codeDiscovery": "stats = {\"HP\": 100, \"Mana\": 50}\nstats[\"Mana\"] = 60 # Update value\nstats[\"Gold\"] = 10 # Add new pair\nprint(stats.get(\"Exp\", 0)) # Output: 0 (default if not found)\n",
+        "quest": "Create a dictionary called phone_book with two names and numbers. Add a third one and print the whole dictionary.",
+        "quiz": [
+          {
+            "question": "What is used to retrieve a value from a dictionary?",
+            "options": [
+              "An index number.",
+              "A key."
+            ]
+          },
+          {
+            "question": "How do you add a new key-value pair to an existing dictionary?",
+            "options": [
+              "Use the .append() method.",
+              "Assign a value to a new key (e.g., d[key] = value)."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "9.2",
+        "title": "Set Theory",
+        "theory": "A set is a collection of unique elements. If you try to add a duplicate item to a set, Python will simply ignore it.",
+        "logic": "Sets are perfect for mathematical operations like Union (combining two sets) or Intersection (finding only the items that appear in both sets).",
+        "codeDiscovery": "set1 = {1, 2, 3}\nset2 = {3, 4, 5}\nprint(set1.union(set2))        # {1, 2, 3, 4, 5}\nprint(set1.intersection(set2)) # {3}\n",
+        "quest": "Create two sets of colors and find the intersection to see which colors are in both.",
+        "quiz": [
+          {
+            "question": "What happens if you add a duplicate item to a set?",
+            "options": [
+              "It replaces the old item.",
+              "The set remains unchanged (no duplicates allowed)."
+            ]
+          },
+          {
+            "question": "Which operation combines all elements from two sets?",
+            "options": [
+              "Intersection",
+              "Union."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "9.3",
+        "title": "Nesting Dolls",
+        "theory": "Data structures can be nested inside each other. You can have a list of dictionaries, a dictionary of lists, or even a list of lists.",
+        "logic": "This is how complex data, like a game world with multiple characters and their specific inventories, is organized in professional software.",
+        "codeDiscovery": "players = [\n{\"name\": \"Hero\", \"items\": [\"Sword\", \"Shield\"]},\n{\"name\": \"Mage\", \"items\": [\"Staff\", \"Potion\"]}\n]\nprint(players[1][\"name\"]) # Output: Mage\n",
+        "quest": "Create a dictionary where the keys are category names (like \"Fruits\") and the values are lists of items (like [\"Apple\", \"Banana\"]).",
+        "quiz": [
+          {
+            "question": "Can a dictionary contain another dictionary as a value?",
+            "options": [
+              "Yes.",
+              "No."
+            ]
+          },
+          {
+            "question": "In a list of lists [[1,2], [3,4]], how would you access the number 3?",
+            "options": [
+              "data[1][0]",
+              "data[0][1]"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Tier 3: Advanced (Structure & Systems)",
+    "lessons": [
+      {
+        "id": "10.1",
+        "title": "Blueprinting (OOP)",
+        "theory": "Object-Oriented Programming (OOP) is a method of aligning software design around data, or \"objects,\" rather than functions and logic. A Class serves as a blueprint\u2014for example, a \"Car\" class defines what every car has (wheels, color) and does (drive, brake).",
+        "logic": "The self parameter is a reference to the current instance of the class and is used to access variables that belong to the class.",
+        "codeDiscovery": "class Hero:\ndef set_name(self, name):\nself.name = name\nmy_hero = Hero()\nmy_hero.set_name(\"Astra\")\n",
+        "quest": "Create a class named Pet and define a method set_type that assigns a species to the pet using self.",
+        "quiz": [
+          {
+            "question": "What is a \"blueprint\" for creating objects called?",
+            "options": [
+              "A Function",
+              "A Class"
+            ]
+          },
+          {
+            "question": "What parameter is required in every class method to refer to the specific object?",
+            "options": [
+              "self",
+              "instance"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "10.2",
+        "title": "The Constructor",
+        "theory": "A constructor is a special method that Python calls automatically when a new object is created. In Python, the constructor is named __init__.",
+        "logic": "It is primarily used to initialize an object's attributes (data) so the object is ready to use immediately upon creation.",
+        "codeDiscovery": "class Robot:\ndef __init__(self, model, power):\nself.model = model\nself.power = power\nmy_bot = Robot(\"RX-7\", 100)\n",
+        "quest": "Create a Book class with an __init__ method that initializes title and author attributes.",
+        "quiz": [
+          {
+            "question": "Which method is automatically called when an object is created?",
+            "options": [
+              "start",
+              "init"
+            ]
+          },
+          {
+            "question": "Where are an object's attributes usually initialized?",
+            "options": [
+              "In the constructor",
+              "In a global variable"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "10.3",
+        "title": "Encapsulation",
+        "theory": "Encapsulation is the practice of hiding the internal state of an object and requiring all interaction to be performed through an object's methods.",
+        "logic": "In Python, you can hide an attribute by starting its name with two underscores (e.g., __hidden_speed). This prevents code outside the class from accidentally changing sensitive data.",
+        "codeDiscovery": "class BankAccount:\ndef __init__(self, balance):\nself.__balance = balance # Private attribute\nacc = BankAccount(1000)\n# print(acc.__balance) # This would cause an Error!\n",
+        "quest": "Create a User class with a private attribute __password and a method to check if a password is correct.",
+        "quiz": [
+          {
+            "question": "How do you indicate that an attribute should be private in Python?",
+            "options": [
+              "Use the 'private' keyword",
+              "Start the name with two underscores"
+            ]
+          },
+          {
+            "question": "What is the main purpose of encapsulation?",
+            "options": [
+              "To make code run faster",
+              "To protect an object's internal data from outside interference"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "11.1",
+        "title": "The Family Tree",
+        "theory": "Inheritance allows a new class (subclass) to take on the attributes and methods of an existing class (superclass).",
+        "logic": "This creates an \"is-a\" relationship. For example, a Car is-a Vehicle. The subclass can then add its own unique features or \"override\" existing ones.",
+        "codeDiscovery": "class Vehicle:\ndef move(self):\nprint(\"Moving...\")\nclass Car(Vehicle): # Car inherits from Vehicle\ndef drift(self):\nprint(\"Drifting!\")\n",
+        "quest": "Create a superclass Animal and a subclass Dog that inherits from it.",
+        "quiz": [
+          {
+            "question": "In inheritance, which class is the more general one?",
+            "options": [
+              "Subclass",
+              "Superclass"
+            ]
+          },
+          {
+            "question": "What kind of relationship does inheritance establish?",
+            "options": [
+              "\"is-a\" relationship",
+              "\"has-a\" relationship"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "6.1",
+        "title": "The Local File Cabin",
+        "theory": "For an app to work offline, it must save data to the device's storage. Python uses the open() function to create a connection between your program and a file on the disk.",
+        "logic": "You must specify a mode: 'w' for writing (creates a new file or overwrites) and 'r' for reading. Always close() the file to save changes and free memory.",
+        "codeDiscovery": "file = open(\"save.txt\", \"w\")\nfile.write(\"Level: 10\\nGold: 500\")\nfile.close()\n",
+        "quest": "Write a script that creates a file named notes.txt and writes your favorite quote into it.",
+        "quiz": [
+          {
+            "question": "Which mode is used to open a file for reading?",
+            "options": [
+              "'w'",
+              "'r'"
+            ]
+          },
+          {
+            "question": "What must you do to ensure data is properly saved to a file?",
+            "options": [
+              "Use the save() method",
+              "Use the close() method"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "6.2",
+        "title": "The Error Shield",
+        "theory": "A professional app should never crash when it encounters an error (like a missing file). We use Exception Handling to catch these errors before they stop the program.",
+        "logic": "Code that might fail is placed in a try block, and the code to handle the error is placed in an except block.",
+        "codeDiscovery": "try:\nfile = open(\"missing_file.txt\", \"r\")\nexcept FileNotFoundError:\nprint(\"Oops! That file doesn't exist.\")\n",
+        "quest": "Wrap a division by zero (10 / 0) inside a try/except block to catch a ZeroDivisionError.",
+        "quiz": [
+          {
+            "question": "Which block contains the code that might cause an error?",
+            "options": [
+              "except",
+              "try"
+            ]
+          },
+          {
+            "question": "What is the purpose of an 'except' block?",
+            "options": [
+              "To repeat code",
+              "To handle an error if one occurs in the try block"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "14.1",
+        "title": "The Mini-Database (SQLite)",
+        "theory": "While text files are good for simple notes, a Database is needed for structured data (like a list of 1000 users). Python comes with SQLite built-in, which stores the entire database in a single local file.",
+        "logic": "You use a connection to talk to the database and a cursor to execute SQL commands like CREATE TABLE.",
+        "codeDiscovery": "import sqlite3\nconn = sqlite3.connect('quest.db')\ncur = conn.cursor()\ncur.execute('CREATE TABLE Inventory (Item TEXT, Qty INTEGER)')\nconn.close()\n",
+        "quest": "Connect to a database named players.db and create a table for Scores with columns for Name and Points.",
+        "quiz": [
+          {
+            "question": "Which SQL command is used to create a new table?",
+            "options": [
+              "MAKE TABLE",
+              "CREATE TABLE"
+            ]
+          },
+          {
+            "question": "What object is used to execute SQL statements in Python?",
+            "options": [
+              "Connector",
+              "Cursor"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "14.2",
+        "title": "The Data Hunter",
+        "theory": "Once data is in a database, you use the SELECT statement to \"hunt\" for it. You can filter results using WHERE and sort them using ORDER BY.",
+        "logic": "In Python, after executing a SELECT query, you use fetchone() or fetchall() to bring the results from the database into your variables.",
+        "codeDiscovery": "cur.execute('SELECT Item FROM Inventory WHERE Qty > 10')\nresults = cur.fetchall()\nfor row in results:\nprint(row)\n",
+        "quest": "Write a SQL query to select all names from a Users table where the Age is greater than 18.",
+        "quiz": [
+          {
+            "question": "Which SQL clause is used to filter results?",
+            "options": [
+              "FILTER",
+              "WHERE"
+            ]
+          },
+          {
+            "question": "Which method retrieves all rows from a query result?",
+            "options": [
+              "fetchall()",
+              "getall()"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "14.3",
+        "title": "The Full Cycle (CRUD)",
+        "theory": "CRUD stands for Create, Read, Update, and Delete\u2014the four basic operations of persistent storage.",
+        "logic": "You use INSERT to create data, UPDATE to change existing data, and DELETE to remove it. Crucial: You must call conn.commit() to save these changes permanently to the database file.",
+        "codeDiscovery": "cur.execute('UPDATE Inventory SET Qty = 20 WHERE Item = \"Potion\"')\nconn.commit() # This saves the change!\n",
+        "quest": "Write an UPDATE statement to change a player's Score to 100 in a Scores table.",
+        "quiz": [
+          {
+            "question": "What must you call to save changes like INSERT or UPDATE to the database?",
+            "options": [
+              "save()",
+              "commit()"
+            ]
+          },
+          {
+            "question": "Which SQL command is used to remove a record?",
+            "options": [
+              "REMOVE",
+              "DELETE"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "12.1",
+        "title": "The Echo (Recursion)",
+        "theory": "Recursion occurs when a function calls itself to solve a smaller version of the same problem.",
+        "logic": "Every recursive function must have a Base Case (the condition that stops the calling) to prevent an infinite loop of calls that would crash the app.",
+        "codeDiscovery": "def count_down(n):\nif n == 0: # Base Case\nprint(\"Done!\")\nelse:\nprint(n)\ncount_down(n - 1) # Recursive Call\n",
+        "quest": "Write a recursive function to calculate the factorial of a number (e.g., 5! = 5 * 4 * 3 * 2 * 1).",
+        "quiz": [
+          {
+            "question": "What is a function that calls itself known as?",
+            "options": [
+              "Redundant function",
+              "Recursive function"
+            ]
+          },
+          {
+            "question": "What is the part of a recursive function that stops the recursion?",
+            "options": [
+              "Stop case",
+              "Base case"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
