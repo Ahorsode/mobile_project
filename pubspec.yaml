@@ -40,6 +40,10 @@ dependencies:
   provider: ^6.1.1
   flutter_markdown: ^0.7.3
   shared_preferences: ^2.2.2
+  file_picker: ^8.1.7
+  path: ^1.8.3
+  highlight: ^0.7.0
+  flutter_highlight: ^0.7.0
 
 dev_dependencies:
   flutter_test:

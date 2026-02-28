@@ -1,14 +1,16 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:path/path.dart' as p;
+import 'package:file_picker/file_picker.dart';
 
 import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:highlight/languages/python.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:serious_python/serious_python.dart';
 import 'package:flutter_highlight/themes/monokai-sublime.dart';
 
 import '../widgets/file_explorer_drawer.dart';
+import '../services/python_service.dart';
 
 class PlaygroundScreen extends StatefulWidget {
   const PlaygroundScreen({super.key});
@@ -19,16 +21,15 @@ class PlaygroundScreen extends StatefulWidget {
 
 class _PlaygroundScreenState extends State<PlaygroundScreen> {
   late CodeController _codeController;
-  String _consoleOutput = "";
-  bool _isRunning = false;
-  Timer? _logWatcher;
-  bool _isInputRequested = false;
   final ScrollController _consoleScrollController = ScrollController();
   final FocusNode _consoleFocusNode = FocusNode();
   final TextEditingController _consoleInputController = TextEditingController();
   String _currentAppPath = "";
+  String _currentPath = ""; // Path relative to app documents
   List<FileSystemEntity> _files = [];
-  String _currentFileName = "user_script.py";
+  String _currentFileName = ""; // Full relative path to currently open file
+
+  PythonService? _pythonService;
   final TextEditingController _fileNameController = TextEditingController();
 
   @override
@@ -38,48 +39,108 @@ class _PlaygroundScreenState extends State<PlaygroundScreen> {
       text: 'print("Hello from PyQuest!")\n',
       language: python,
     );
-    _refreshFileList();
+    _initializeWorkspace();
+  }
+
+  Future<void> _initializeWorkspace() async {
+    final appDir = await getApplicationDocumentsDirectory();
+    _currentAppPath = appDir.path;
+    _currentPath = _currentAppPath;
+    _pythonService = PythonService(userCodeDir: _currentAppPath);
+    await _refreshFileList();
+
+    // Default file
+    if (await File(p.join(_currentAppPath, "user_script.py")).exists()) {
+      await _loadFile("user_script.py");
+    }
   }
 
   Future<void> _refreshFileList() async {
-    final appDir = await getApplicationDocumentsDirectory();
-    final entities = await appDir.list().toList();
+    final dir = Directory(_currentPath);
+    if (!await dir.exists()) await dir.create(recursive: true);
+
+    final entities = await dir.list().toList();
     setState(() {
-      _currentAppPath = appDir.path;
       _files = entities
-          .where((e) =>
-              !e.path.endsWith(".log") &&
-              !e.path.endsWith(".lock") &&
-              !e.path.endsWith(".txt"))
+          .where(
+            (e) =>
+                !e.path.endsWith(".log") &&
+                !e.path.endsWith(".lock") &&
+                !e.path.endsWith(".txt"),
+          )
           .toList();
     });
   }
 
   Future<void> _loadFile(String fileName) async {
-    final file = File("$_currentAppPath/$fileName");
+    final filePath = p.isAbsolute(fileName)
+        ? fileName
+        : p.join(_currentPath, fileName);
+    final file = File(filePath);
     if (await file.exists()) {
       final content = await file.readAsString();
       setState(() {
-        _currentFileName = fileName;
+        _currentFileName = p.relative(filePath, from: _currentAppPath);
         _codeController.text = content;
       });
     }
   }
 
   Future<void> _saveCurrentFile() async {
-    final file = File("$_currentAppPath/$_currentFileName");
+    if (_currentFileName.isEmpty) {
+      _currentFileName = "user_script.py";
+    }
+    final file = File(p.join(_currentAppPath, _currentFileName));
     await file.writeAsString(_codeController.text);
   }
 
   Future<void> _createNewFile(String name, {bool isFolder = false}) async {
+    final targetPath = p.join(_currentPath, name);
     if (isFolder) {
-      final dir = Directory("$_currentAppPath/$name");
+      final dir = Directory(targetPath);
       await dir.create();
     } else {
-      final file = File("$_currentAppPath/$name");
+      final file = File(targetPath);
       await file.writeAsString("");
     }
     _refreshFileList();
+  }
+
+  void _navigateToFolder(String folderName) {
+    setState(() {
+      _currentPath = p.join(_currentPath, folderName);
+    });
+    _refreshFileList();
+  }
+
+  void _navigateUp() {
+    if (_currentPath != _currentAppPath) {
+      setState(() {
+        _currentPath = p.dirname(_currentPath);
+      });
+      _refreshFileList();
+    }
+  }
+
+  Future<void> _importFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['py'],
+    );
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      String fileName = result.files.single.name;
+      String content = await file.readAsString();
+
+      final targetFile = File(p.join(_currentPath, fileName));
+      await targetFile.writeAsString(content);
+
+      await _refreshFileList();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Imported $fileName")));
+    }
   }
 
   void _insertQuickCode() {
@@ -96,7 +157,7 @@ for i in range(5):
   @override
   void dispose() {
     _codeController.dispose();
-    _logWatcher?.cancel();
+    _pythonService?.dispose();
     _consoleScrollController.dispose();
     _consoleFocusNode.dispose();
     _consoleInputController.dispose();
@@ -105,81 +166,23 @@ for i in range(5):
   }
 
   Future<void> _runCode() async {
-    setState(() {
-      _isRunning = true;
-      _consoleOutput = "PyQuest Console v2.0\n-------------------\n";
-    });
+    if (_pythonService == null) return;
 
-    if (mounted) {
-      _showConsolePopup(context);
-    }
-
+    _showConsolePopup(context);
     await _saveCurrentFile();
 
-    try {
-      final scriptFile = File("$_currentAppPath/$_currentFileName");
-      final logFilePath = "$_currentAppPath/output.log";
-
-      final userScriptPath = "$_currentAppPath/user_script.py";
-      if (_currentFileName != "user_script.py") {
-        await scriptFile.copy(userScriptPath);
+    final userScriptPath = p.join(_currentAppPath, "user_script.py");
+    if (_currentFileName != "user_script.py") {
+      final currentFile = File(p.join(_currentAppPath, _currentFileName));
+      if (await currentFile.exists()) {
+        await currentFile.copy(userScriptPath);
       }
+    }
 
-      final logFile = File(logFilePath);
-      if (await logFile.exists()) {
-        await logFile.writeAsString("");
-      }
+    await _pythonService!.runCode();
 
-      _logWatcher?.cancel();
-      _logWatcher =
-          Timer.periodic(const Duration(milliseconds: 50), (timer) async {
-        if (await logFile.exists()) {
-          final content = await logFile.readAsString();
-          if (mounted) {
-            setState(() {
-              _consoleOutput = content;
-            });
-            _scrollToBottom();
-          }
-        }
-
-        final lockFile = File("$_currentAppPath/input.lock");
-        if (await lockFile.exists() && !_isInputRequested) {
-          if (mounted) {
-            setState(() {
-              _isInputRequested = true;
-            });
-            _scrollToBottom();
-            _consoleFocusNode.requestFocus();
-          }
-        }
-      });
-
-      await SeriousPython.run(
-        "assets/app.zip",
-        environmentVariables: {"USER_CODE_DIR": _currentAppPath},
-      );
-    } catch (e) {
-      if (mounted) {
-        setState(() {
-          _consoleOutput += "\nError: $e";
-        });
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isRunning = false;
-          _isInputRequested = false;
-        });
-        _logWatcher?.cancel();
-        final logFile = File("$_currentAppPath/output.log");
-        if (await logFile.exists()) {
-          final content = await logFile.readAsString();
-          setState(() {
-            _consoleOutput = content;
-          });
-        }
-      }
+    if (mounted) {
+      setState(() {}); // Refresh run state
     }
   }
 
@@ -197,12 +200,10 @@ for i in range(5):
 
   Future<void> _submitInput() async {
     final input = _consoleInputController.text;
-    final inputFile = File("$_currentAppPath/input.txt");
-    await inputFile.writeAsString(input);
+    await _pythonService?.submitInput(input);
 
     if (mounted) {
       setState(() {
-        _isInputRequested = false;
         _consoleInputController.clear();
       });
       _scrollToBottom();
@@ -218,34 +219,42 @@ for i in range(5):
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setPopupState) {
+            final isRunning = _pythonService?.isRunning ?? false;
             return Container(
               height: MediaQuery.of(context).size.height * 0.85,
               decoration: const BoxDecoration(
                 color: Colors.black,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                border:
-                    Border(top: BorderSide(color: Colors.blueAccent, width: 2)),
+                border: Border(
+                  top: BorderSide(color: Colors.blueAccent, width: 2),
+                ),
               ),
               child: Column(
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 12),
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.grey[900],
-                      borderRadius:
-                          const BorderRadius.vertical(top: Radius.circular(20)),
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(20),
+                      ),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
-                            const Text("Console Output",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blueAccent)),
-                            if (_isRunning)
+                            const Text(
+                              "Console Output",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blueAccent,
+                              ),
+                            ),
+                            if (isRunning)
                               const Padding(
                                 padding: EdgeInsets.only(left: 12.0),
                                 child: SizedBox(
@@ -262,7 +271,7 @@ for i in range(5):
                         IconButton(
                           icon: const Icon(Icons.close, color: Colors.white54),
                           onPressed: () => Navigator.pop(context),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -272,24 +281,32 @@ for i in range(5):
                       width: double.infinity,
                       child: SingleChildScrollView(
                         controller: _consoleScrollController,
-                        child: ListenableBuilder(
-                          listenable: Listenable.merge([_consoleFocusNode]),
-                          builder: (context, _) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  _consoleOutput.isEmpty
-                                      ? "// Initializing..."
-                                      : _consoleOutput,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            StreamBuilder<String>(
+                              stream: _pythonService?.outputStream,
+                              builder: (context, snapshot) {
+                                final output =
+                                    snapshot.data ?? "// Initializing...";
+                                _scrollToBottom();
+                                return Text(
+                                  output,
                                   style: const TextStyle(
                                     fontFamily: 'monospace',
                                     color: Colors.greenAccent,
                                     fontSize: 14,
                                   ),
-                                ),
-                                if (_isInputRequested)
-                                  TextField(
+                                );
+                              },
+                            ),
+                            StreamBuilder<bool>(
+                              stream: _pythonService?.inputRequestStream,
+                              builder: (context, snapshot) {
+                                final isInputRequested = snapshot.data ?? false;
+                                if (isInputRequested) {
+                                  _consoleFocusNode.requestFocus();
+                                  return TextField(
                                     controller: _consoleInputController,
                                     focusNode: _consoleFocusNode,
                                     onSubmitted: (val) {
@@ -308,10 +325,12 @@ for i in range(5):
                                     ),
                                     cursorColor: Colors.blueAccent,
                                     autofocus: true,
-                                  ),
-                              ],
-                            );
-                          },
+                                  );
+                                }
+                                return const SizedBox.shrink();
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -333,12 +352,14 @@ for i in range(5):
         content: TextField(
           controller: _fileNameController,
           decoration: InputDecoration(
-              hintText: isFolder ? "folder_name" : "script.py"),
+            hintText: isFolder ? "folder_name" : "script.py",
+          ),
         ),
         actions: [
           TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel")),
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancel"),
+          ),
           TextButton(
             onPressed: () {
               if (_fileNameController.text.isNotEmpty) {
@@ -371,8 +392,12 @@ for i in range(5):
       ),
       drawer: FileExplorerDrawer(
         files: _files,
-        currentFileName: _currentFileName,
+        currentFileName: p.basename(_currentFileName),
+        isRoot: _currentPath == _currentAppPath,
         onFileSelected: _loadFile,
+        onFolderSelected: _navigateToFolder,
+        onNavigateUp: _navigateUp,
+        onImportFile: _importFile,
         onFileDeleted: (entity) async {
           await entity.delete(recursive: true);
           _refreshFileList();
@@ -394,8 +419,10 @@ for i in range(5):
                 clipBehavior: Clip.antiAlias,
                 child: CodeField(
                   controller: _codeController,
-                  textStyle:
-                      const TextStyle(fontFamily: 'monospace', fontSize: 16),
+                  textStyle: const TextStyle(
+                    fontFamily: 'monospace',
+                    fontSize: 16,
+                  ),
                   expands: true,
                 ),
               ),
@@ -418,17 +445,27 @@ for i in range(5):
                 ),
                 const SizedBox(width: 12),
                 FloatingActionButton.extended(
-                  onPressed: _isRunning ? null : _runCode,
-                  icon: _isRunning
+                  onPressed: (_pythonService?.isRunning ?? false)
+                      ? null
+                      : _runCode,
+                  icon: (_pythonService?.isRunning ?? false)
                       ? const SizedBox(
                           width: 20,
                           height: 20,
                           child: CircularProgressIndicator(
-                              strokeWidth: 2, color: Colors.white),
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
                         )
                       : const Icon(Icons.play_arrow),
-                  label: Text(_isRunning ? "Running..." : "Run Code"),
-                  backgroundColor: _isRunning ? Colors.grey : Colors.blueAccent,
+                  label: Text(
+                    (_pythonService?.isRunning ?? false)
+                        ? "Running..."
+                        : "Run Code",
+                  ),
+                  backgroundColor: (_pythonService?.isRunning ?? false)
+                      ? Colors.grey
+                      : Colors.blueAccent,
                 ),
               ],
             ),
