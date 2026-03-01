@@ -61,14 +61,27 @@ class _PlaygroundScreenState extends State<PlaygroundScreen> {
 
     final entities = await dir.list().toList();
     setState(() {
-      _files = entities
-          .where(
-            (e) =>
-                !e.path.endsWith(".log") &&
-                !e.path.endsWith(".lock") &&
-                !e.path.endsWith(".txt"),
-          )
-          .toList();
+      _files = entities.where((e) {
+        final name = p.basename(e.path);
+        final isRoot = _currentPath == _currentAppPath;
+
+        // Hide internal system files and folders
+        if (name.startsWith('.') ||
+            name == '__pycache__' ||
+            name == 'flet' ||
+            name.endsWith('.log') ||
+            name.endsWith('.lock') ||
+            name == 'input.txt') {
+          return false;
+        }
+
+        // Hide execution bridge files in root
+        if (isRoot && (name == 'main.py' || name == 'user_script.py')) {
+          return false;
+        }
+
+        return true;
+      }).toList();
     });
   }
 
