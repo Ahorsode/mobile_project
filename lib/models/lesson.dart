@@ -20,6 +20,7 @@ class Lesson {
   final String theory;
   final String logic;
   final String codeDiscovery;
+  final String tryCode;
   final String quest;
   final List<QuizQuestion> quiz;
 
@@ -29,6 +30,7 @@ class Lesson {
     required this.theory,
     required this.logic,
     required this.codeDiscovery,
+    required this.tryCode,
     required this.quest,
     required this.quiz,
   });
@@ -40,6 +42,7 @@ class Lesson {
       theory: json['theory'] ?? '',
       logic: json['logic'] ?? '',
       codeDiscovery: json['codeDiscovery'] ?? '',
+      tryCode: json['tryCode'] ?? json['codeDiscovery'] ?? '',
       quest: json['quest'] ?? '',
       quiz: (json['quiz'] as List? ?? [])
           .map((q) => QuizQuestion.fromJson(q))

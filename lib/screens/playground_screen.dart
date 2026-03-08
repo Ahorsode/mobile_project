@@ -1,16 +1,21 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:file_picker/file_picker.dart';
 
 import 'package:code_text_field/code_text_field.dart';
+import 'package:provider/provider.dart';
+import '../providers/code_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:highlight/languages/python.dart';
+import 'package:serious_python/serious_python.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_highlight/themes/monokai-sublime.dart';
 
 import '../widgets/file_explorer_drawer.dart';
 import '../services/python_service.dart';
+import '../widgets/gemini_overlay.dart';
 
 class PlaygroundScreen extends StatefulWidget {
   const PlaygroundScreen({super.key});
@@ -31,28 +36,120 @@ class _PlaygroundScreenState extends State<PlaygroundScreen> {
 
   PythonService? _pythonService;
   final TextEditingController _fileNameController = TextEditingController();
+  final GlobalKey<GeminiOverlayState> _geminiKey =
+      GlobalKey<GeminiOverlayState>();
+  String _latestErrorLogs = "";
+  StreamSubscription? _logSubscription;
 
   @override
   void initState() {
     super.initState();
     _codeController = CodeController(
-      text: 'print("Hello from PyQuest!")\n',
+      text: "", // Changed initial text
       language: python,
     );
+
+    // Handshake: Register controller with provider
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<CodeProvider>(
+        context,
+        listen: false,
+      ).registerController(_codeController);
+    });
+
     _initializeWorkspace();
+  }
+
+  Future<void> _preloadLessons() async {
+    try {
+      final String response = await DefaultAssetBundle.of(
+        context,
+      ).loadString('assets/lessons.json');
+      final data = await json.decode(response);
+      final tiers = data as List;
+
+      final practiceDir = Directory(
+        p.join(_currentAppPath, "Academy_Practice"),
+      );
+      if (!await practiceDir.exists())
+        await practiceDir.create(recursive: true);
+
+      for (var tier in tiers) {
+        final lessons = tier['lessons'] as List;
+        for (var lesson in lessons) {
+          final id = lesson['id'];
+          final fileName = 'practice_${id.toString().replaceAll('.', '_')}.py';
+          final filePath = p.join(practiceDir.path, fileName);
+          final file = File(filePath);
+
+          // Always overwrite to ensure "Reset to Default" on app launch/reload
+          final code =
+              lesson['tryCode'] ??
+              lesson['codeDiscovery'] ??
+              "# New Lesson: $id";
+          await file.writeAsString(code);
+        }
+      }
+      await _refreshFileList();
+    } catch (e) {
+      debugPrint("Error preloading lessons: $e");
+    }
   }
 
   Future<void> _initializeWorkspace() async {
     final appDir = await getApplicationDocumentsDirectory();
-    _currentAppPath = appDir.path;
-    _currentPath = _currentAppPath;
-    _pythonService = PythonService(userCodeDir: _currentAppPath);
+    setState(() {
+      _currentAppPath = appDir.path;
+      _currentPath = _currentAppPath;
+      _pythonService = PythonService(userCodeDir: _currentAppPath);
+    });
+
+    _logSubscription = _pythonService?.outputStream.listen((log) {
+      if (log.contains("Error") || log.contains("Traceback")) {
+        _latestErrorLogs = log;
+        // Auto-trigger Gemini when an error appears
+        _geminiKey.currentState?.triggerAIAnalysis(isError: true);
+      }
+    });
+
+    // Ensure practice folder exists and is populated
+    await _preloadLessons();
     await _refreshFileList();
 
-    // Default file
-    if (await File(p.join(_currentAppPath, "user_script.py")).exists()) {
-      await _loadFile("user_script.py");
-    }
+    // Handle arguments from Academy
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final args =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+      if (args != null && args.containsKey('initialCode')) {
+        final practiceDir = Directory(
+          p.join(_currentAppPath, "Academy_Practice"),
+        );
+        if (!await practiceDir.exists()) await practiceDir.create();
+
+        final fileName = args['fileName'] ?? "practice.py";
+        final code = args['initialCode'];
+
+        // Save file inside Academy_Practice folder
+        final filePath = p.join(practiceDir.path, fileName);
+        final file = File(filePath);
+        // Force overwrite when coming from Academy to ensure reset
+        await file.writeAsString(code);
+
+        // Update current path to the practice folder so it's visible in explorer
+        setState(() {
+          _currentPath = practiceDir.path;
+        });
+
+        await _refreshFileList();
+        // Load file using relative path or absolute path
+        await _loadFile(filePath);
+      } else {
+        // Default file
+        if (await File(p.join(_currentAppPath, "user_script.py")).exists()) {
+          await _loadFile("user_script.py");
+        }
+      }
+    });
   }
 
   Future<void> _refreshFileList() async {
@@ -69,6 +166,8 @@ class _PlaygroundScreenState extends State<PlaygroundScreen> {
         if (name.startsWith('.') ||
             name == '__pycache__' ||
             name == 'flet' ||
+            name == 'flutter_assets' ||
+            name.startsWith('res_timestamp-') ||
             name.endsWith('.log') ||
             name.endsWith('.lock') ||
             name == 'input.txt') {
@@ -156,21 +255,11 @@ class _PlaygroundScreenState extends State<PlaygroundScreen> {
     }
   }
 
-  void _insertQuickCode() {
-    _codeController.text = '''# Quick Code Template
-name = input("Enter your name: ")
-print(f"Welcome to PyQuest, {name}!")
-
-# Simple loop example
-for i in range(5):
-    print(f"Counting: {i}")
-''';
-  }
-
   @override
   void dispose() {
     _codeController.dispose();
     _pythonService?.dispose();
+    _logSubscription?.cancel();
     _consoleScrollController.dispose();
     _consoleFocusNode.dispose();
     _consoleInputController.dispose();
@@ -451,13 +540,6 @@ for i in range(5):
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 FloatingActionButton.extended(
-                  onPressed: _insertQuickCode,
-                  icon: const Icon(Icons.bolt),
-                  label: const Text("Quick Code"),
-                  backgroundColor: Colors.orangeAccent,
-                ),
-                const SizedBox(width: 12),
-                FloatingActionButton.extended(
                   onPressed: (_pythonService?.isRunning ?? false)
                       ? null
                       : _runCode,
@@ -479,6 +561,11 @@ for i in range(5):
                   backgroundColor: (_pythonService?.isRunning ?? false)
                       ? Colors.grey
                       : Colors.blueAccent,
+                ),
+                const SizedBox(width: 12),
+                GeminiOverlay(
+                  key: _geminiKey,
+                  getLatestLogs: () => _latestErrorLogs,
                 ),
               ],
             ),

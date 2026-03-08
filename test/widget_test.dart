@@ -1,7 +1,6 @@
-
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:project_part1_v1/main.dart';
+import 'package:pyquest/main.dart';
 
 void main() {
   testWidgets('Playground UI smoke test', (WidgetTester tester) async {

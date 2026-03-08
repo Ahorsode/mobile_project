@@ -4,9 +4,24 @@ import 'screens/home_screen.dart';
 import 'screens/playground_screen.dart';
 import 'screens/academy_screen.dart';
 import 'providers/academy_provider.dart';
+import 'providers/code_provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
-  runApp(const PyQuestApp());
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AcademyProvider()),
+        ChangeNotifierProvider(create: (_) => CodeProvider()),
+      ],
+      child: const PyQuestApp(),
+    ),
+  );
 }
 
 class PyQuestApp extends StatelessWidget {
@@ -14,26 +29,21 @@ class PyQuestApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AcademyProvider()),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'PyQuest',
-        theme: ThemeData(
-          brightness: Brightness.dark,
-          primarySwatch: Colors.blue,
-          scaffoldBackgroundColor: const Color(0xFF0F172A), // Slate 900
-          fontFamily: 'Inter',
-        ),
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const HomeScreen(),
-          '/editor': (context) => const PlaygroundScreen(),
-          '/academy': (context) => const AcademyScreen(),
-        },
+    return MaterialApp(
+      title: 'PyQuest',
+      navigatorKey: navigatorKey,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: const Color(0xFF0F172A),
+        scaffoldBackgroundColor: const Color(0xFF0F172A),
       ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomeScreen(),
+        '/editor': (context) => const PlaygroundScreen(),
+        '/academy': (context) => const AcademyScreen(),
+      },
     );
   }
 }

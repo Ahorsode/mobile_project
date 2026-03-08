@@ -115,14 +115,18 @@ class FileExplorerDrawer extends StatelessWidget {
                       Navigator.pop(context);
                     }
                   },
-                  trailing: IconButton(
-                    icon: const Icon(
-                      Icons.delete,
-                      size: 20,
-                      color: Colors.redAccent,
-                    ),
-                    onPressed: () => onFileDeleted(entity),
-                  ),
+                  trailing:
+                      (name == "Academy_Practice" ||
+                          entity.path.contains("Academy_Practice"))
+                      ? null
+                      : IconButton(
+                          icon: const Icon(
+                            Icons.delete,
+                            size: 20,
+                            color: Colors.redAccent,
+                          ),
+                          onPressed: () => onFileDeleted(entity),
+                        ),
                 );
               },
             ),

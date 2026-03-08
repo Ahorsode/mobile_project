@@ -8,6 +8,7 @@
         "theory": "A computer’s CPU is often called its \"brain,\" but it only understands the simplest instructions. All data—whether a photo or a line of code—is stored as binary, a series of 0s and 1s representing \"off\" and \"on\" electrical states.",
         "logic": "To run a program, the CPU follows the Fetch-Decode-Execute cycle: it fetches an instruction from memory, decodes it into a command it understands, and then executes that command. This process repeats millions of times per second to make your apps work.",
         "codeDiscovery": "# Converting the letter 'A' to its binary (digital) form\nchar = 'A'\nprint(bin(ord(char)))\n",
+        "tryCode": "# Practice: Digital Brain\nchar = 'A'\nprint(f'Binary of {char} is {bin(ord(char))}')\n",
         "quest": "Use the print() function to display your own name.",
         "quiz": [
           {
@@ -137,7 +138,7 @@
         "title": "The Logic Gate",
         "theory": "Programs often need to make decisions. The if statement allows a block of code to run ONLY if a specific condition is True.",
         "logic": "We use Comparison Operators to test these conditions: == (equal to), != (not equal), > (greater than), and < (less than).",
-        "codeDiscovery": "score = 90\nif score >= 70:\nprint(\"You passed the quest!\")\n",
+        "codeDiscovery": "score = 90\nif score >= 70:\n    print(\"You passed the quest!\")\n",
         "quest": "Write an if statement that prints \"Low Battery\" if a variable battery is less than 20.",
         "quiz": [
           {
@@ -163,7 +164,7 @@
         "title": "The Fork in the Road",
         "theory": "What if you want to do one thing if a condition is True, and something else if it's False? We use the if-else statement. For multiple choices, we use if-elif-else.",
         "logic": "This creates \"Dual-Alternative\" or \"Multi-Alternative\" decision structures, allowing your program to handle many different scenarios.",
-        "codeDiscovery": "temp = 30\nif temp > 80:\nprint(\"It's hot!\")\nelif temp > 60:\nprint(\"It's nice out.\")\nelse:\nprint(\"It's cold!\")\n",
+        "codeDiscovery": "temp = 30\nif temp > 80:\n    print(\"It's hot!\")\nelif temp > 60:\n    print(\"It's nice out.\")\nelse:\n    print(\"It's cold!\")\n",
         "quest": "Write a script that checks a grade variable. If it's 90+, print \"A\"; 80+, print \"B\"; otherwise, print \"C\".",
         "quiz": [
           {
@@ -189,7 +190,7 @@
         "title": "Boolean Warriors",
         "theory": "Sometimes one condition isn't enough. We use Logical Operators—and, or, and not—to combine multiple Boolean expressions.",
         "logic": "With and, both sides must be True. With or, at least one side must be True. The not operator simply flips True to False and vice versa.",
-        "codeDiscovery": "has_key = True\nis_level_10 = True\nif has_key and is_level_10:\nprint(\"Door opened!\")\n",
+        "codeDiscovery": "has_key = True\nis_level_10 = True\nif has_key and is_level_10:\n    print(\"Door opened!\")\n",
         "quest": "Write a condition that prints \"Access Granted\" if a user is an admin OR has a valid_token.",
         "quiz": [
           {
@@ -215,7 +216,7 @@
         "title": "The Infinite Loop",
         "theory": "A while loop repeats a block of code as long as a condition remains True. It is \"condition-controlled\" because the loop only stops when the condition becomes False.",
         "logic": "Be careful! If the condition never becomes False, you create an Infinite Loop, which can crash your program.",
-        "codeDiscovery": "countdown = 5\nwhile countdown > 0:\nprint(countdown)\ncountdown -= 1  # Important: change the condition!\nprint(\"Blast off!\")\n",
+        "codeDiscovery": "countdown = 5\nwhile countdown > 0:\n    print(countdown)\n    countdown -= 1  # Important: change the condition!\nprint(\"Blast off!\")\n",
         "quest": "Write a while loop that prints \"Loading...\" 3 times.",
         "quiz": [
           {
@@ -241,7 +242,7 @@
         "title": "The Counter Quest",
         "theory": "A for loop is \"count-controlled,\" meaning it repeats a specific number of times. In Python, we usually use it with the range() function.",
         "logic": "range(5) will generate numbers from 0 up to (but not including) 5. This is the most efficient way to repeat an action when you know exactly how many times it should run.",
-        "codeDiscovery": "for x in range(5):\nprint(\"Repeat number:\", x)\n",
+        "codeDiscovery": "for x in range(5):\n    print(\"Repeat number:\", x)\n",
         "quest": "Use a for loop and range() to print the numbers from 1 to 10.",
         "quiz": [
           {
@@ -272,7 +273,7 @@
         "title": "The Modular Architect",
         "theory": "As programs grow, they become harder to manage. Professional developers use functions to break complex code into smaller, manageable \"modules\". A function is a named block of code that performs a specific task and can be executed whenever needed.",
         "logic": "Functions allow for code reuse; instead of writing the same logic ten times, you write it once in a function and \"call\" it ten times. This also makes debugging easier because you only have one place to fix a mistake.",
-        "codeDiscovery": "def welcome_message():\nprint(\"Welcome to the Modular Quest!\")\nprint(\"Prepare for your next challenge.\")\nwelcome_message() # This calls the function\n",
+        "codeDiscovery": "def welcome_message():\n    print(\"Welcome to the Modular Quest!\")\n    print(\"Prepare for your next challenge.\")\nwelcome_message() # This calls the function\n",
         "quest": "Define a function named shout_ready that prints \"I am ready for Tier 2!\" and call it.",
         "quiz": [
           {
@@ -297,8 +298,8 @@
         "id": "5.2",
         "title": "The Messenger",
         "theory": "Functions can be made more powerful by sending data into them. An argument is a piece of data sent into a function, and a parameter is the special variable that receives it.",
-        "logic": "Some functions are value-returning, meaning they perform a calculation and \"return\" the result back to the part of the program that called them.",
-        "codeDiscovery": "def double_number(num): # 'num' is a parameter\nreturn num * 2\nresult = double_number(10) # 10 is an argument\nprint(result) # Output: 20\n",
+        "logic": "Some Flare functions are value-returning, meaning they perform a calculation and \"return\" the result back to the part of the program that called them.",
+        "codeDiscovery": "def double_number(num): # 'num' is a parameter\n    return num * 2\nresult = double_number(10) # 10 is an argument\nprint(result) # Output: 20\n",
         "quest": "Write a function square(n) that returns the square of a number, then print the result of square(5).",
         "quiz": [
           {
@@ -324,7 +325,7 @@
         "title": "The Scope Shield",
         "theory": "Not all variables are visible everywhere. A local variable is created inside a function and cannot be accessed by code outside that function. Its \"scope\" is limited to its own function \"shield.\"",
         "logic": "Global variables are visible to every function in a file. However, relying on them is risky because any part of the program can change them, leading to bugs that are hard to track.",
-        "codeDiscovery": "def my_func():\nlocal_var = \"I'm hidden!\"\nprint(local_var)\nmy_func()\n# print(local_var)  <-- This would cause an Error!\n",
+        "codeDiscovery": "def my_func():\n    local_var = \"I'm hidden!\"\n    print(local_var)\nmy_func()\n# print(local_var)  <-- This would cause an Error!\n",
         "quest": "Create a global variable name and a function that prints it. Then try to create a local variable inside the function and print it.",
         "quiz": [
           {
@@ -506,7 +507,7 @@
         "title": "Nesting Dolls",
         "theory": "Data structures can be nested inside each other. You can have a list of dictionaries, a dictionary of lists, or even a list of lists.",
         "logic": "This is how complex data, like a game world with multiple characters and their specific inventories, is organized in professional software.",
-        "codeDiscovery": "players = [\n{\"name\": \"Hero\", \"items\": [\"Sword\", \"Shield\"]},\n{\"name\": \"Mage\", \"items\": [\"Staff\", \"Potion\"]}\n]\nprint(players[1][\"name\"]) # Output: Mage\n",
+        "codeDiscovery": "players = [\n    {\"name\": \"Hero\", \"items\": [\"Sword\", \"Shield\"]},\n    {\"name\": \"Mage\", \"items\": [\"Staff\", \"Potion\"]}\n]\nprint(players[1][\"name\"]) # Output: Mage\n",
         "quest": "Create a dictionary where the keys are category names (like \"Fruits\") and the values are lists of items (like [\"Apple\", \"Banana\"]).",
         "quiz": [
           {
@@ -537,7 +538,7 @@
         "title": "Blueprinting (OOP)",
         "theory": "Object-Oriented Programming (OOP) is a method of aligning software design around data, or \"objects,\" rather than functions and logic. A Class serves as a blueprint—for example, a \"Car\" class defines what every car has (wheels, color) and does (drive, brake).",
         "logic": "The self parameter is a reference to the current instance of the class and is used to access variables that belong to the class.",
-        "codeDiscovery": "class Hero:\ndef set_name(self, name):\nself.name = name\nmy_hero = Hero()\nmy_hero.set_name(\"Astra\")\n",
+        "codeDiscovery": "class Hero:\n    def set_name(self, name):\n        self.name = name\nmy_hero = Hero()\nmy_hero.set_name(\"Astra\")\n",
         "quest": "Create a class named Pet and define a method set_type that assigns a species to the pet using self.",
         "quiz": [
           {
@@ -563,7 +564,7 @@
         "title": "The Constructor",
         "theory": "A constructor is a special method that Python calls automatically when a new object is created. In Python, the constructor is named __init__.",
         "logic": "It is primarily used to initialize an object's attributes (data) so the object is ready to use immediately upon creation.",
-        "codeDiscovery": "class Robot:\ndef __init__(self, model, power):\nself.model = model\nself.power = power\nmy_bot = Robot(\"RX-7\", 100)\n",
+        "codeDiscovery": "class Robot:\n    def __init__(self, model, power):\n        self.model = model\n        self.power = power\nmy_bot = Robot(\"RX-7\", 100)\n",
         "quest": "Create a Book class with an __init__ method that initializes title and author attributes.",
         "quiz": [
           {
@@ -589,7 +590,7 @@
         "title": "Encapsulation",
         "theory": "Encapsulation is the practice of hiding the internal state of an object and requiring all interaction to be performed through an object's methods.",
         "logic": "In Python, you can hide an attribute by starting its name with two underscores (e.g., __hidden_speed). This prevents code outside the class from accidentally changing sensitive data.",
-        "codeDiscovery": "class BankAccount:\ndef __init__(self, balance):\nself.__balance = balance # Private attribute\nacc = BankAccount(1000)\n# print(acc.__balance) # This would cause an Error!\n",
+        "codeDiscovery": "class BankAccount:\n    def __init__(self, balance):\n        self.__balance = balance # Private attribute\nacc = BankAccount(1000)\n# print(acc.__balance) # This would cause an Error!\n",
         "quest": "Create a User class with a private attribute __password and a method to check if a password is correct.",
         "quiz": [
           {
@@ -615,7 +616,7 @@
         "title": "The Family Tree",
         "theory": "Inheritance allows a new class (subclass) to take on the attributes and methods of an existing class (superclass).",
         "logic": "This creates an \"is-a\" relationship. For example, a Car is-a Vehicle. The subclass can then add its own unique features or \"override\" existing ones.",
-        "codeDiscovery": "class Vehicle:\ndef move(self):\nprint(\"Moving...\")\nclass Car(Vehicle): # Car inherits from Vehicle\ndef drift(self):\nprint(\"Drifting!\")\n",
+        "codeDiscovery": "class Vehicle:\n    def move(self):\n        print(\"Moving...\")\nclass Car(Vehicle): # Car inherits from Vehicle\n    def drift(self):\n        print(\"Drifting!\")\n",
         "quest": "Create a superclass Animal and a subclass Dog that inherits from it.",
         "quiz": [
           {
@@ -667,7 +668,7 @@
         "title": "The Error Shield",
         "theory": "A professional app should never crash when it encounters an error (like a missing file). We use Exception Handling to catch these errors before they stop the program.",
         "logic": "Code that might fail is placed in a try block, and the code to handle the error is placed in an except block.",
-        "codeDiscovery": "try:\nfile = open(\"missing_file.txt\", \"r\")\nexcept FileNotFoundError:\nprint(\"Oops! That file doesn't exist.\")\n",
+        "codeDiscovery": "try:\n    file = open(\"missing_file.txt\", \"r\")\nexcept FileNotFoundError:\n    print(\"Oops! That file doesn't exist.\")\n",
         "quest": "Wrap a division by zero (10 / 0) inside a try/except block to catch a ZeroDivisionError.",
         "quiz": [
           {
@@ -719,7 +720,7 @@
         "title": "The Data Hunter",
         "theory": "Once data is in a database, you use the SELECT statement to \"hunt\" for it. You can filter results using WHERE and sort them using ORDER BY.",
         "logic": "In Python, after executing a SELECT query, you use fetchone() or fetchall() to bring the results from the database into your variables.",
-        "codeDiscovery": "cur.execute('SELECT Item FROM Inventory WHERE Qty > 10')\nresults = cur.fetchall()\nfor row in results:\nprint(row)\n",
+        "codeDiscovery": "cur.execute('SELECT Item FROM Inventory WHERE Qty > 10')\nresults = cur.fetchall()\nfor row in results:\n    print(row)\n",
         "quest": "Write a SQL query to select all names from a Users table where the Age is greater than 18.",
         "quiz": [
           {
@@ -771,7 +772,7 @@
         "title": "The Echo (Recursion)",
         "theory": "Recursion occurs when a function calls itself to solve a smaller version of the same problem.",
         "logic": "Every recursive function must have a Base Case (the condition that stops the calling) to prevent an infinite loop of calls that would crash the app.",
-        "codeDiscovery": "def count_down(n):\nif n == 0: # Base Case\nprint(\"Done!\")\nelse:\nprint(n)\ncount_down(n - 1) # Recursive Call\n",
+        "codeDiscovery": "def count_down(n):\n    if n == 0: # Base Case\n        print(\"Done!\")\n    else:\n        print(n)\n        count_down(n - 1) # Recursive Call\n",
         "quest": "Write a recursive function to calculate the factorial of a number (e.g., 5! = 5 * 4 * 3 * 2 * 1).",
         "quiz": [
           {

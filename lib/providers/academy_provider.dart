@@ -1,17 +1,26 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../models/lesson.dart';
+import '../services/database_service.dart';
+import '../services/experience_manager.dart';
 
 class AcademyProvider with ChangeNotifier {
+  final DatabaseService _dbService = DatabaseService();
+
   List<Tier> _tiers = [];
   Map<String, double> _lessonScores = {};
   Set<String> _completedLessons = {};
+  int _totalXP = 0;
+  int _currentLevel = 1;
+  List<String> _inventory = [];
   bool _isLoading = true;
 
   List<Tier> get tiers => _tiers;
   bool get isLoading => _isLoading;
+  int get totalXP => _totalXP;
+  int get currentLevel => _currentLevel;
+  List<String> get inventory => _inventory;
 
   AcademyProvider() {
     _init();
@@ -26,7 +35,9 @@ class AcademyProvider with ChangeNotifier {
 
   Future<void> loadLessons() async {
     try {
-      final String response = await rootBundle.loadString('assets/lessons.json');
+      final String response = await rootBundle.loadString(
+        'assets/lessons.json',
+      );
       final data = await json.decode(response);
       _tiers = (data as List).map((t) => Tier.fromJson(t)).toList();
     } catch (e) {
@@ -35,34 +46,91 @@ class AcademyProvider with ChangeNotifier {
   }
 
   Future<void> loadProgress() async {
-    final prefs = await SharedPreferences.getInstance();
-    _completedLessons = (prefs.getStringList('completed_lessons') ?? []).toSet();
-    
-    final scoresJson = prefs.getString('lesson_scores') ?? '{}';
-    final Map<String, dynamic> decodedScores = json.decode(scoresJson);
-    _lessonScores = decodedScores.map((key, value) => MapEntry(key, value.toDouble()));
+    // Load User Progress (XP, Level)
+    final userProgress = await _dbService.getUserProgress();
+    _totalXP = userProgress['total_xp'] ?? 0;
+    _currentLevel = userProgress['current_level'] ?? 1;
+
+    // Load Lesson Status
+    final lessonStatuses = await _dbService.getAllLessonStatus();
+    _completedLessons.clear();
+    _lessonScores.clear();
+    for (var status in lessonStatuses) {
+      String id = status['lesson_id'];
+      if (status['is_completed'] == 1) {
+        _completedLessons.add(id);
+      }
+      _lessonScores[id] = status['quiz_score'] ?? 0.0;
+    }
+
+    // Load Inventory
+    final inventoryItems = await _dbService.getInventory();
+    _inventory = inventoryItems
+        .map((item) => item['item_id'] as String)
+        .toList();
   }
 
-  bool isLessonCompleted(String lessonId) => _completedLessons.contains(lessonId);
+  bool isLessonCompleted(String lessonId) =>
+      _completedLessons.contains(lessonId);
 
   double getLessonScore(String lessonId) => _lessonScores[lessonId] ?? 0.0;
 
   Future<void> completeLesson(String lessonId, double score) async {
+    bool alreadyCompleted = _completedLessons.contains(lessonId);
+
     _completedLessons.add(lessonId);
     _lessonScores[lessonId] = score;
-    
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList('completed_lessons', _completedLessons.toList());
-    await prefs.setString('lesson_scores', json.encode(_lessonScores));
-    
+
+    // Calculate XP Reward
+    int xpGained = 0;
+    if (!alreadyCompleted) {
+      xpGained += ExperienceManager.xpPerLesson;
+    }
+
+    if (score >= 1.0) {
+      // Bonus for perfect quiz (only once per lesson for simplicity, or every time?)
+      // Requirement says "Every perfect quiz grants an extra 50 XP".
+      // Let's assume it's per completion attempt that is perfect.
+      xpGained += ExperienceManager.perfectQuizBonus;
+    }
+
+    if (xpGained > 0) {
+      _totalXP += xpGained;
+      int newLevel = ExperienceManager.calculateLevel(_totalXP);
+      if (newLevel > _currentLevel) {
+        _currentLevel = newLevel;
+        // Trigger Level Up Celebration in UI if possible, or just update state
+      }
+      await _dbService.updateXP(_totalXP, _currentLevel);
+    }
+
+    await _dbService.saveLessonStatus(lessonId, true, score);
+
+    // Check for inventory unlocks (Example: Unlock Boolean Shield on Lesson 1.3)
+    if (lessonId == "1.3" && !_inventory.contains("boolean_shield")) {
+      await unlockItem("boolean_shield", "The Boolean Shield", "shield");
+    }
+
     notifyListeners();
+  }
+
+  Future<void> unlockItem(
+    String itemId,
+    String itemName,
+    String itemType,
+  ) async {
+    if (!_inventory.contains(itemId)) {
+      await _dbService.unlockItem(itemId, itemName, itemType);
+      _inventory.add(itemId);
+      notifyListeners();
+    }
   }
 
   double getTierProgress(int tierIndex) {
     if (tierIndex < 0 || tierIndex >= _tiers.length) return 0.0;
     final lessons = _tiers[tierIndex].lessons;
     if (lessons.isEmpty) return 0.0;
-    
+
     int completedCount = lessons.where((l) => isLessonCompleted(l.id)).length;
     return completedCount / lessons.length;
   }
@@ -71,24 +139,22 @@ class AcademyProvider with ChangeNotifier {
     if (tierIndex < 0 || tierIndex >= _tiers.length) return 0.0;
     final lessons = _tiers[tierIndex].lessons;
     if (lessons.isEmpty) return 0.0;
-    
+
     double totalScore = 0.0;
     int scoredCount = 0;
-    
+
     for (var lesson in lessons) {
       if (_lessonScores.containsKey(lesson.id)) {
         totalScore += _lessonScores[lesson.id]!;
         scoredCount++;
       }
     }
-    
+
     return scoredCount == 0 ? 0.0 : totalScore / scoredCount;
   }
 
   bool isTierUnlocked(int tierIndex) {
-    if (tierIndex == 0) return true; // First tier always unlocked
-    
-    // Previous tier must be 100% complete
+    if (tierIndex == 0) return true;
     double prevTierProgress = getTierProgress(tierIndex - 1);
     return prevTierProgress >= 1.0;
   }

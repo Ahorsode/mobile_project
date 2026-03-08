@@ -162,6 +162,30 @@ class _LessonCardScreenState extends State<LessonCardScreen> {
               ),
             ),
           ),
+          const SizedBox(height: 16),
+          Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/editor',
+                  arguments: {
+                    'initialCode': widget.lesson.tryCode,
+                    'fileName':
+                        'practice_${widget.lesson.id.replaceAll('.', '_')}.py',
+                  },
+                );
+              },
+              icon: const Icon(Icons.code),
+              label: const Text("TRY IN WORKPLACE"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueAccent.withOpacity(0.2),
+                foregroundColor: Colors.blueAccent,
+                side: const BorderSide(color: Colors.blueAccent),
+              ),
+            ),
+          ),
           const SizedBox(height: 32),
           const Text(
             "THE QUEST",
