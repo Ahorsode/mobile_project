@@ -1,24 +1,13 @@
 import 'dart:isolate';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class CodeRefactorService {
-  late final GenerativeModel _model;
   late final String _apiKey;
   static const String _systemInstruction =
       "You are the PyQuest Mentor. Your goal is to help students fix Python errors based on Tony Gaddis principles. Be concise and always provide the full corrected code block.";
 
   CodeRefactorService() {
-    final apiKey = dotenv.env['GEMINI_API_KEY'];
-    if (apiKey == null) {
-      throw Exception('GEMINI_API_KEY not found in .env');
-    }
-    _apiKey = apiKey;
-    _model = GenerativeModel(
-      model: 'gemini-1.5-flash',
-      apiKey: _apiKey,
-      systemInstruction: Content.system(_systemInstruction),
-    );
+    _apiKey = "AIzaSyAGbANC7c4kb2X8NtyzVmG_iGupyWml0Qk";
   }
 
   /// Fixes the provided code, optionally taking error logs into account.
@@ -67,6 +56,7 @@ class CodeRefactorService {
         final response = await model.generateContent(content);
 
         final text = response.text;
+        print("Gemini Response: $text");
         return text;
       } catch (e) {
         print("AI Call Error (Isolate): $e");

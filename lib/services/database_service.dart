@@ -20,8 +20,17 @@ class DatabaseService {
     String path = join(await getDatabasesPath(), 'pyquest.db');
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _onCreate,
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute('DROP TABLE IF EXISTS UserProgress');
+          await db.execute('DROP TABLE IF EXISTS LessonStatus');
+          await db.execute('DROP TABLE IF EXISTS Inventory');
+          await db.execute('DROP TABLE IF EXISTS GameInventory');
+          await _onCreate(db, newVersion);
+        }
+      },
     );
   }
 
@@ -35,7 +44,8 @@ class DatabaseService {
           streak_count INTEGER DEFAULT 0,
           last_login_date TEXT,
           character_name TEXT DEFAULT 'Data Knight',
-          current_tier_id INTEGER DEFAULT 1
+          current_tier_id INTEGER DEFAULT 1,
+          gems INTEGER DEFAULT 0
       )
     ''');
 
@@ -61,6 +71,20 @@ class DatabaseService {
       )
     ''');
 
+    // Create GameInventory table (Quest Mode)
+    await db.execute('''
+      CREATE TABLE GameInventory (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          item_id TEXT UNIQUE,
+          item_name TEXT NOT NULL,
+          category TEXT,
+          attack_power INTEGER DEFAULT 0,
+          defense_power INTEGER DEFAULT 0,
+          is_equipped INTEGER DEFAULT 0,
+          earned_at TEXT
+      )
+    ''');
+
     // Initialize UserProgress
     await db.insert('UserProgress', {
       'id': 1,
@@ -68,6 +92,7 @@ class DatabaseService {
       'current_level': 1,
       'streak_count': 0,
       'last_login_date': DateTime.now().toIso8601String(),
+      'gems': 0,
     });
   }
 
@@ -84,6 +109,16 @@ class DatabaseService {
     await db.update(
       'UserProgress',
       {'total_xp': newXP, 'current_level': newLevel},
+      where: 'id = ?',
+      whereArgs: [1],
+    );
+  }
+
+  Future<void> updateGems(int newGems) async {
+    final db = await database;
+    await db.update(
+      'UserProgress',
+      {'gems': newGems},
       where: 'id = ?',
       whereArgs: [1],
     );
@@ -127,6 +162,54 @@ class DatabaseService {
         'unlocked_at': DateTime.now().toIso8601String(),
       },
       conflictAlgorithm: ConflictAlgorithm.ignore,
+    );
+  }
+
+  // --- GameInventory Methods (Quest Mode) ---
+
+  Future<List<Map<String, dynamic>>> getGameInventory() async {
+    final db = await database;
+    return await db.query('GameInventory');
+  }
+
+  Future<void> saveGameItem({
+    required String itemId,
+    required String itemName,
+    required String category,
+    int attackPower = 0,
+    int defensePower = 0,
+  }) async {
+    final db = await database;
+    await db.insert(
+      'GameInventory',
+      {
+        'item_id': itemId,
+        'item_name': itemName,
+        'category': category,
+        'attack_power': attackPower,
+        'defense_power': defensePower,
+        'is_equipped': 0,
+        'earned_at': DateTime.now().toIso8601String(),
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<void> equipItem(String itemId, String category) async {
+    final db = await database;
+    // Unequip previously equipped item in the same category
+    await db.update(
+      'GameInventory',
+      {'is_equipped': 0},
+      where: 'category = ?',
+      whereArgs: [category],
+    );
+    // Equip the new item
+    await db.update(
+      'GameInventory',
+      {'is_equipped': 1},
+      where: 'item_id = ?',
+      whereArgs: [itemId],
     );
   }
 }

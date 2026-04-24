@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import '../providers/code_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:highlight/languages/python.dart';
-import 'package:serious_python/serious_python.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_highlight/themes/monokai-sublime.dart';
 
@@ -71,8 +70,9 @@ class _PlaygroundScreenState extends State<PlaygroundScreen> {
       final practiceDir = Directory(
         p.join(_currentAppPath, "Academy_Practice"),
       );
-      if (!await practiceDir.exists())
+      if (!await practiceDir.exists()) {
         await practiceDir.create(recursive: true);
+      }
 
       for (var tier in tiers) {
         final lessons = tier['lessons'] as List;
@@ -533,7 +533,7 @@ class _PlaygroundScreenState extends State<PlaygroundScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.grey[900]?.withOpacity(0.5),
+              color: Colors.grey[900]?.withValues(alpha: 0.5),
               border: const Border(top: BorderSide(color: Colors.white10)),
             ),
             child: Row(

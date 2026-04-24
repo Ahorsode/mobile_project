@@ -43,6 +43,9 @@ dependencies:
   file_picker: ^8.1.7
   google_generative_ai: ^0.4.0
   flutter_dotenv: ^5.1.0
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.15.3
+  cloud_firestore: ^4.13.6
   path: ^1.8.3
   highlight: ^0.7.0
   flutter_highlight: ^0.7.0
@@ -50,12 +53,18 @@ dependencies:
   confetti: ^0.7.0
   google_fonts: ^6.1.0
   lottie: ^3.1.2
+  sensors_plus: ^6.1.1
+  percent_indicator: ^4.2.3
+  flutter_animate: ^4.5.0
+  audioplayers: ^6.1.1
+  vibration: ^2.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_launcher_icons: "^0.13.1"
+  flutter_lints: ^3.0.1
 
 flutter_launcher_icons:
   android: true
@@ -64,12 +73,6 @@ flutter_launcher_icons:
   adaptive_icon_background: "#1E293B"
   adaptive_icon_foreground: "assets/icon/logo_foreground.png"
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
-  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

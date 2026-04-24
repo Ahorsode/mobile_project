@@ -4,6 +4,15 @@ import 'package:flutter/services.dart';
 import '../models/lesson.dart';
 import '../services/database_service.dart';
 import '../services/experience_manager.dart';
+import '../services/user_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+class LessonStatusModel {
+  final bool isCompleted;
+  final double score;
+
+  LessonStatusModel({required this.isCompleted, required this.score});
+}
 
 class AcademyProvider with ChangeNotifier {
   final DatabaseService _dbService = DatabaseService();
@@ -21,6 +30,18 @@ class AcademyProvider with ChangeNotifier {
   int get totalXP => _totalXP;
   int get currentLevel => _currentLevel;
   List<String> get inventory => _inventory;
+
+  Map<String, LessonStatusModel> get lessonStatus {
+    Map<String, LessonStatusModel> statusMap = {};
+    for (var lessonId in _completedLessons) {
+      statusMap[lessonId] = LessonStatusModel(
+        isCompleted: true,
+        score: _lessonScores[lessonId] ?? 0.0,
+      );
+    }
+    // Also include scored but not fully completed if applicable, but per UI completion is what matters
+    return statusMap;
+  }
 
   AcademyProvider() {
     _init();
@@ -110,17 +131,45 @@ class AcademyProvider with ChangeNotifier {
     if (lessonId == "1.3" && !_inventory.contains("boolean_shield")) {
       await unlockItem("boolean_shield", "The Boolean Shield", "shield");
     }
+    notifyListeners();
+  }
 
+  Future<void> addXP(int amount) async {
+    _totalXP += amount;
+    int newLevel = ExperienceManager.calculateLevel(_totalXP);
+    if (newLevel > _currentLevel) {
+      _currentLevel = newLevel;
+    }
+    
+    // Sync to SQLite
+    await _dbService.updateXP(_totalXP, _currentLevel);
+    
+    // Sync to Firebase
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await UserRepository().updateXP(user.uid, _totalXP, _currentLevel);
+    }
+    
     notifyListeners();
   }
 
   Future<void> unlockItem(
     String itemId,
     String itemName,
-    String itemType,
+    String category,
   ) async {
     if (!_inventory.contains(itemId)) {
-      await _dbService.unlockItem(itemId, itemName, itemType);
+      // Save to standard Inventory
+      await _dbService.unlockItem(itemId, itemName, category);
+      
+      // Save to GameInventory for Quest Mode
+      await _dbService.saveGameItem(
+        itemId: itemId,
+        itemName: itemName,
+        category: category,
+        attackPower: category == "weapon" ? 10 : 0, // Example logic
+      );
+      
       _inventory.add(itemId);
       notifyListeners();
     }

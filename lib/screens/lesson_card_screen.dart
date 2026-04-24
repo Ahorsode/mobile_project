@@ -180,7 +180,7 @@ class _LessonCardScreenState extends State<LessonCardScreen> {
               icon: const Icon(Icons.code),
               label: const Text("TRY IN WORKPLACE"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent.withOpacity(0.2),
+                backgroundColor: Colors.blueAccent.withValues(alpha: 0.2),
                 foregroundColor: Colors.blueAccent,
                 side: const BorderSide(color: Colors.blueAccent),
               ),
@@ -252,8 +252,8 @@ class _LessonCardScreenState extends State<LessonCardScreen> {
                   decoration: BoxDecoration(
                     color: isSelected
                         ? (isCorrectOption
-                              ? Colors.green.withOpacity(0.2)
-                              : Colors.red.withOpacity(0.2))
+                              ? Colors.green.withValues(alpha: 0.2)
+                              : Colors.red.withValues(alpha: 0.2))
                         : Colors.white10,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(

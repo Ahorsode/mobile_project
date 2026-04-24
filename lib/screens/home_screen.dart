@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../widgets/tactile_button.dart';
+import '../widgets/world_engine_background.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -6,87 +8,140 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
+      body: Stack(
+        children: [
+          // Background Layer
+          const WorldEngineBackground(),
+          
+          // Main UI Layer
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  const Color(0xFF1E293B).withValues(alpha: 0.8),
+                  const Color(0xFF0F172A).withValues(alpha: 0.9),
+                ],
+              ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Hero(
+                  tag: 'app_logo',
+                  child: Container(
+                    padding: const EdgeInsets.all(32),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withValues(alpha: 0.05),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.blueAccent.withValues(alpha: 0.2),
+                          blurRadius: 40,
+                          spreadRadius: 5,
+                        ),
+                      ],
+                    ),
+                    child: Image.asset(
+                      'assets/icon/app_icon.png',
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 32),
+                const Text(
+                  "PyQuest",
+                  style: TextStyle(
+                    fontSize: 56,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white,
+                    letterSpacing: 4,
+                    shadows: [
+                      Shadow(color: Colors.blueAccent, blurRadius: 20),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  "NEO-PYTHON ADVENTURE",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.blueAccent.withValues(alpha: 0.7),
+                    letterSpacing: 2,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 60),
+                
+                TactileButton(
+                  onPressed: () => Navigator.pushNamed(context, '/editor'),
+                  baseColor: Colors.blueAccent,
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.terminal, color: Colors.white),
+                      SizedBox(width: 12),
+                      Text(
+                        "WORKSPACE",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                
+                const SizedBox(height: 24),
+                
+                TactileButton(
+                  onPressed: () => Navigator.pushNamed(context, '/quest'),
+                  baseColor: const Color(0xFF334155),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.map, color: Colors.white),
+                      SizedBox(width: 12),
+                      Text(
+                        "QUESTRIA MAP",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                
+                const SizedBox(height: 24),
+                
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildSmallTactile(context, Icons.leaderboard, "/leaderboard"),
+                    const SizedBox(width: 24),
+                    _buildSmallTactile(context, Icons.school, "/academy"),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(32),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white.withOpacity(0.05),
-              ),
-              child: Image.asset(
-                'assets/icon/app_icon.png',
-                width: 60,
-                height: 60,
-                fit: BoxFit.contain,
-              ),
-            ),
-            const SizedBox(height: 24),
-            const Text(
-              "PyQuest",
-              style: TextStyle(
-                fontSize: 48,
-                fontWeight: FontWeight.w900,
-                color: Colors.white,
-                letterSpacing: 3,
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              "Master Python Offline",
-              style: TextStyle(fontSize: 18, color: Colors.blueGrey),
-            ),
-            const SizedBox(height: 60),
-            ElevatedButton.icon(
-              onPressed: () => Navigator.pushNamed(context, '/editor'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 20,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                elevation: 10,
-              ),
-              icon: const Icon(Icons.rocket_launch),
-              label: const Text(
-                "Enter Workspace",
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-            const SizedBox(height: 20),
-            OutlinedButton.icon(
-              onPressed: () => Navigator.pushNamed(context, '/academy'),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: Colors.blueAccent,
-                side: const BorderSide(color: Colors.blueAccent, width: 2),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 20,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              icon: const Icon(Icons.school),
-              label: const Text("Academy", style: TextStyle(fontSize: 20)),
-            ),
-          ],
-        ),
+        ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, '/login'),
+        backgroundColor: Colors.blueAccent,
+        elevation: 10,
+        child: const Icon(Icons.person, color: Colors.white),
+      ),
+    );
+  }
+
+  Widget _buildSmallTactile(BuildContext context, IconData icon, String route) {
+    return TactileButton(
+      width: 80,
+      height: 80,
+      baseColor: const Color(0xFF1E293B),
+      onPressed: () => Navigator.pushNamed(context, route),
+      child: Icon(icon, color: Colors.blueAccent, size: 32),
     );
   }
 }

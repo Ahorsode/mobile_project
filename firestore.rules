@@ -1,0 +1,26 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // User profile rules
+    match /users/{userId} {
+      // Leaderboard requires anyone to read profiles
+      allow read: if request.auth != null;
+      
+      // Allow creation of a profile exactly matching the Auth UID
+      allow create: if request.auth != null && request.auth.uid == userId;
+      
+      // Allow updates only by the owner
+      // CRITICAL: Prevent updating 'username' after creation to maintain uniqueness integrity
+      allow update: if request.auth != null && request.auth.uid == userId
+                    && (request.resource.data.username == resource.data.username);
+      
+      // Deletion is restricted
+      allow delete: if false;
+    }
+    
+    // Default rule: Lock everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

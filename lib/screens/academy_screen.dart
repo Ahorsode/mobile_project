@@ -71,7 +71,7 @@ class _AcademyScreenState extends State<AcademyScreen> {
         child: Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: const Color(0xFF1E293B).withOpacity(0.9),
+            color: const Color(0xFF1E293B).withValues(alpha: 0.9),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: Colors.white10),
           ),
@@ -79,7 +79,7 @@ class _AcademyScreenState extends State<AcademyScreen> {
             children: [
               CircleAvatar(
                 radius: 24,
-                backgroundColor: Colors.blueAccent.withOpacity(0.2),
+                backgroundColor: Colors.blueAccent.withValues(alpha: 0.2),
                 child: const Icon(Icons.person, color: Colors.blueAccent),
               ),
               const SizedBox(width: 12),
@@ -186,7 +186,7 @@ class _AcademyScreenState extends State<AcademyScreen> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
-        color: isUnlocked ? Colors.blue.withOpacity(0.1) : Colors.black12,
+        color: isUnlocked ? Colors.blue.withValues(alpha: 0.1) : Colors.black12,
       ),
       child: Center(
         child: Text(
@@ -226,8 +226,8 @@ class _AcademyScreenState extends State<AcademyScreen> {
               color: !isUnlocked
                   ? Colors.white10
                   : (isCompleted
-                        ? Colors.green.withOpacity(0.2)
-                        : Colors.blue.withOpacity(0.2)),
+                        ? Colors.green.withValues(alpha: 0.2)
+                        : Colors.blue.withValues(alpha: 0.2)),
               border: Border.all(
                 color: !isUnlocked
                     ? Colors.white10
@@ -241,7 +241,7 @@ class _AcademyScreenState extends State<AcademyScreen> {
                             (isCompleted
                                     ? Colors.greenAccent
                                     : Colors.blueAccent)
-                                .withOpacity(0.3),
+                                .withValues(alpha: 0.3),
                         blurRadius: 10,
                         spreadRadius: 2,
                       ),

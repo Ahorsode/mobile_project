@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "3034074101",
+    "project_id": "pyquest-976f3",
+    "storage_bucket": "pyquest-976f3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3034074101:android:5a963750dc36ed7b8c2ebc",
+        "android_client_info": {
+          "package_name": "com.example.project_part1_v1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwDqUFvjJyolBwSD6L5sMP5vXoXii7mLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

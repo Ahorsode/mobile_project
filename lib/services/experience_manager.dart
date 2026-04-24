@@ -1,25 +1,35 @@
+import 'dart:math';
+
 class ExperienceManager {
   static const int xpPerLesson = 100;
   static const int perfectQuizBonus = 50;
   static const int xpPerLevel = 500;
 
   /// Calculates the current level based on total XP.
+  /// Level = floor((XP / 100)^0.5) + 1
   static int calculateLevel(int totalXP) {
     if (totalXP < 0) return 1;
-    return (totalXP / xpPerLevel).floor() + 1;
+    return (sqrt(totalXP / 100)).floor() + 1;
   }
 
-  /// Calculates the XP required to reach the next level.
+  /// Calculates the total XP required to reach a specific level.
+  static int xpForLevel(int level) {
+    if (level <= 1) return 0;
+    return pow(level - 1, 2).toInt() * 100;
+  }
+
+  /// Calculates the total XP required to reach the next level.
   static int xpToNextLevel(int currentLevel) {
-    return currentLevel * xpPerLevel;
+    return xpForLevel(currentLevel + 1);
   }
 
   /// Calculates progress towards the next level (0.0 to 1.0).
   static double calculateLevelProgress(int totalXP) {
     int currentLevel = calculateLevel(totalXP);
-    int currentLevelXP = (currentLevel - 1) * xpPerLevel;
-    int nextLevelXP = currentLevel * xpPerLevel;
+    int currentLevelXP = xpForLevel(currentLevel);
+    int nextLevelXP = xpForLevel(currentLevel + 1);
 
+    if (nextLevelXP - currentLevelXP == 0) return 1.0;
     return (totalXP - currentLevelXP) / (nextLevelXP - currentLevelXP);
   }
 
